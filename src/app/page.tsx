@@ -3,6 +3,11 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Home() {
+  type InvoiceItem = {
+    quantity: string;
+    description: string;
+    unitPrice: string;
+  };
   const [formData, setFormData] = useState({
     exporter: {
       name: "",
@@ -24,13 +29,7 @@ export default function Home() {
     shippingDate: "",
     countryOfOrigin: "",
     sizeContainer: "",
-    items: [
-      {
-        description: "",
-        quantity: "",
-        unitPrice: "",
-      },
-    ],
+    items: [{} as InvoiceItem],
   });
 
   const { register, handleSubmit } = useForm();
