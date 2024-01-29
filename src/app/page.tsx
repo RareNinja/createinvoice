@@ -24,7 +24,13 @@ export default function Home() {
     shippingDate: "",
     countryOfOrigin: "",
     sizeContainer: "",
-    items: [],
+    items: [
+      {
+        description : [],
+        quantity : [],
+        unitPrice : []
+      }
+    ],
   });
 
   const { register, handleSubmit } = useForm();
@@ -186,7 +192,7 @@ export default function Home() {
                   <th className="border px-4 py-2">Peso Bruto Total (Kg)</th>
                 </tr>
               </thead>
-              {/* <tbody>
+              <tbody>
                 {formData.items.map((item, index) => (
                   <tr key={index}>
                     <td className="border px-4 py-2">
@@ -252,7 +258,7 @@ export default function Home() {
                     <td className="border px-4 py-2">
                       <button
                         type="button"
-                        onClick={() => handleRemoveItem(index)}
+                        // onClick={() => handleRemoveItem(index)}
                         className="bg-red-500 text-white px-4 py-2 rounded-md"
                       >
                         Remover
@@ -260,7 +266,7 @@ export default function Home() {
                     </td>
                   </tr>
                 ))}
-              </tbody> */}
+              </tbody>
             </table>
           </div>
 
