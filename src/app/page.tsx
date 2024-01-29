@@ -53,7 +53,7 @@ export default function Home() {
     });
   };
 
-  const handleRemoveItem = (index) => {
+  const handleRemoveItem = (index : any) => {
     const updatedItems = [...formData.items];
     updatedItems.splice(index, 1);
 
