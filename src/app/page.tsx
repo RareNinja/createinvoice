@@ -26,9 +26,9 @@ export default function Home() {
     sizeContainer: "",
     items: [
       {
-        description: [],
-        quantity: [],
-        unitPrice: [],
+        description: "",
+        quantity: "",
+        unitPrice: "",
       },
     ],
   });
@@ -41,7 +41,27 @@ export default function Home() {
   };
 
   const handleAddItem = () => {
-    // Adicionar um novo campo de item ao formulário
+    setFormData({
+      ...formData,
+      items: [
+        ...formData.items,
+        {
+          description: "",
+          quantity: "",
+          unitPrice: "",
+        },
+      ],
+    });
+  };
+
+  const handleRemoveItem = (index) => {
+    const updatedItems = [...formData.items];
+    updatedItems.splice(index, 1);
+
+    setFormData({
+      ...formData,
+      items: updatedItems,
+    });
   };
 
   return (
@@ -51,7 +71,6 @@ export default function Home() {
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* Cabeçalho da Fatura */}
         <section className="bg-gray-200 p-4 mb-4">
-          
           <h2>Exportador</h2>
           <div className="grid grid-cols-2 gap-4">
             <input
@@ -202,12 +221,12 @@ export default function Home() {
                         <input
                           type="number"
                           name={`formData.items[${index}].quantity`}
-                          value={String(item.quantity)} 
+                          value={item.quantity}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
-                              items: formData.items.map((i) =>
-                                i.id === item.id
+                              items: formData.items.map((i, idx) =>
+                                idx === index
                                   ? { ...i, quantity: e.target.value }
                                   : i
                               ),
@@ -225,9 +244,10 @@ export default function Home() {
                       </td>
 
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="number"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
 
                       <td className="border px-4 py-2">
@@ -239,7 +259,7 @@ export default function Home() {
                             setFormData({
                               ...formData,
                               items: formData.items.map((i) =>
-                                i.id === item.id
+                                i === item
                                   ? { ...i, description: e.target.value }
                                   : i
                               ),
@@ -250,39 +270,45 @@ export default function Home() {
                       </td>
 
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="text"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
-                      
+
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="text"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
 
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="number"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
 
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="number"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
 
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="number"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
 
                       <td className="border px-4 py-2">
-                        <input 
+                        <input
                           type="number"
-                          className="border-gray-300 rounded-md p-2 text-black" />
+                          className="border-gray-300 rounded-md p-2 text-black"
+                        />
                       </td>
 
                       <td className="border px-4 py-2">
