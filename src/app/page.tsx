@@ -186,7 +186,7 @@ export default function Home() {
                   <th className="border px-4 py-2">Peso Bruto Total (Kg)</th>
                 </tr>
               </thead>
-              <tbody>
+              {/* <tbody>
                 {formData.items.map((item, index) => (
                   <tr key={index}>
                     <td className="border px-4 py-2">
@@ -246,7 +246,6 @@ export default function Home() {
                       />
                     </td>
                     <td className="border px-4 py-2">
-                      {/* Exibir o total de cada item */}
                       {item.quantity * item.unitPrice}
                     </td>
 
@@ -261,7 +260,7 @@ export default function Home() {
                     </td>
                   </tr>
                 ))}
-              </tbody>
+              </tbody> */}
             </table>
           </div>
 
