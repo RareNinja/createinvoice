@@ -53,7 +53,7 @@ export default function Home() {
     });
   };
 
-  const handleRemoveItem = (index : any) => {
+  const handleRemoveItem = (index: any) => {
     const updatedItems = [...formData.items];
     updatedItems.splice(index, 1);
 
@@ -108,8 +108,9 @@ export default function Home() {
               className="border-gray-300 rounded-md p-2"
             />
           </div>
-
-          <h2>Importador</h2>
+          <br />
+          <h2 className="text-black">Importador</h2>
+          <br />
           <div className="grid grid-cols-2 gap-4">
             <input
               type="text"
@@ -147,8 +148,9 @@ export default function Home() {
               className="border-gray-300 rounded-md p-2"
             />
           </div>
-
+          <br />
           <h2>Detalhes da Fatura</h2>
+          <br />
           <div className="grid grid-cols-2 gap-4">
             <input
               type="text"
@@ -175,6 +177,7 @@ export default function Home() {
               type="date"
               name="shippingDate"
               // ref={register()}
+              placeholder="Data"
               className="border-gray-300 rounded-md p-2"
             />
             <input
@@ -192,31 +195,30 @@ export default function Home() {
               className="border-gray-300 rounded-md p-2"
             />
           </div>
-
+          <br />
           <h2>Itens da Fatura</h2>
-          <div className="grid grid-cols-6 gap-4">
-            <div className="col-span-4">
-              <table className="table-auto w-full">
+          <br />
+          <div className="grid grid-cols-2 gap-4">
+            <div className="col-span-2">
+              <table className="table-auto">
                 <thead>
-                  <tr>
-                    <th className="border px-4 py-2">Quantidade</th>
-                    <th className="border px-4 py-2">Unit</th>
-                    <th className="border px-4 py-2">NCM/SH</th>
-                    <th className="border px-4 py-2">Descrição</th>
-                    <th className="border px-4 py-2">País de Fabricação</th>
-                    <th className="border px-4 py-2">Moeda</th>
-                    <th className="border px-4 py-2">Preço Unitário</th>
-                    <th className="border px-4 py-2">Preço Total</th>
-                    <th className="border px-4 py-2">
-                      Peso Líquido Total (Kg)
-                    </th>
-                    <th className="border px-4 py-2">Peso Bruto Total (Kg)</th>
+                  <tr className="border-2 px-4 py-2 text-black">
+                    <th className="border-2">Quantidade</th>
+                    <th className="border-2">Unit</th>
+                    <th className="border-2">NCM/SH</th>
+                    <th className="border-2">Descrição</th>
+                    <th className="border-2">País de Fabricação</th>
+                    <th className="border-2">Moeda</th>
+                    <th className="border-2">Preço Unitário</th>
+                    <th className="border-2">Preço Total</th>
+                    <th className="border-2">Peso Líquido Total (Kg)</th>
+                    <th className="border-2">Peso Bruto Total (Kg)</th>
                   </tr>
                 </thead>
                 <tbody>
                   {formData.items.map((item, index) => (
                     <tr key={index}>
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           name={`formData.items[${index}].quantity`}
@@ -235,21 +237,21 @@ export default function Home() {
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="text"
                           name={`formData.items[${index}].description`}
@@ -268,49 +270,49 @@ export default function Home() {
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="text"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="text"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2 text-black">
                         <input
                           type="number"
                           className="border-gray-300 rounded-md p-2 text-black"
                         />
                       </td>
 
-                      <td className="border px-4 py-2">
+                      <td className="border-2 px-4 py-2">
                         <button
                           type="button"
                           onClick={() => handleRemoveItem(index)}
