@@ -76,15 +76,26 @@ export default function Home() {
     }
 
     return (
-        <div className="container max-w-7xl mx-auto flex p-5 flex-col text-xs">
+        <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
             <div className="flex flex-row justify-between items-center">
-                <h1 className="text-2xl font-bold mb-4">Gerador de Invoice e Fatura</h1>
+                <h1 className="text-2xl font-bold mb-4">Gerador de Invoice</h1>
                 <div className="justify-end">logo aqui</div>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-5 gap-5 rounded-lg flex flex-row w-full overflow-hidden">
                 {/* Cabeçalho da Fatura */}
                 <div className="flex flex-col gap-5 w-1/2">
+                    <h2 className="text-xl font-semibold">Numero Invoice</h2>
+                    <div className="flex flex-row gap-5">
+                        <input
+                            type="text"
+                            name="invoice.numero"
+                            // ref={register({ required: true })}
+                            placeholder="Numero da invoice"
+                            onChange={(e) => { handleUpdateFields(e) }}
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                    </div>
                     <h2 className="text-xl font-semibold">Exportador</h2>
                     <div className="flex flex-row gap-5">
                         <input
@@ -417,8 +428,9 @@ export default function Home() {
 
                     <div className="invoice flex flex-col w-full rounded-lg overflow-hidden">
                         <div className={`flex w-full flex-col p-5 gap-3 ${colorInvoice}`}>
-                            <div className="flex w-full justify-end">
+                            <div className="flex w-full justify-end gap-3">
                                 <h3 className="flex text-xl font-bold">INVOICE</h3>
+                                <h3 className="flex text-xl font-bold">{fields["invoice.numero"]}</h3>
                             </div>
                             <div className="flex flex-col text-xs uppercase">
                                 <h4 className="text-lg uppercase font-semibold">Dados do Exportador</h4>
