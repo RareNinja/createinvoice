@@ -10,6 +10,7 @@ export default function Home() {
     };
     
     const [fields, setFields] = useState({}) as any;
+    const [colorInvoice, setColorInvoice] = useState('bg-gray-400')
 
     const [formData, setFormData] = useState({
         exporter: {
@@ -70,18 +71,19 @@ export default function Home() {
         });
     };
 
-    console.log(fields, 'fields');
+    const changeColorInvoice = (className: string) => {
+        setColorInvoice(className);
+    }
 
     return (
-        <div className="container mx-auto max-w-7xl py-5 text-xs">
+        <div className="container max-w-7xl mx-auto flex p-5 flex-col text-xs">
             <div className="flex flex-row justify-between items-center">
                 <h1 className="text-2xl font-bold mb-4">Gerador de Invoice e Fatura</h1>
                 <div className="justify-end">logo aqui</div>
             </div>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-5 gap-5 rounded-lg flex flex-row w-full overflow-hidden">
                 {/* Cabeçalho da Fatura */}
-                <section className="bg-white p-5 gap-5 rounded-lg flex flex-row">
                     <div className="flex flex-col gap-5 w-1/2">
                         <h2 className="text-xl font-semibold">Exportador</h2>
                         <div className="flex flex-row gap-5">
@@ -230,7 +232,7 @@ export default function Home() {
                             />
                         </div>
                         <h2 className="text-xl font-semibold">Itens da Fatura</h2>
-                        <div className="grid grid-cols-2 gap-4 w-full">
+                        <div className="grid grid-cols-2 gap-4 w-full overflow-x-auto">
                             <div className="col-span-2">
                                 <table className="table-auto">
                                     <thead>
@@ -380,32 +382,41 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-5 w-1/2">
-                        <div className="flex flex-row gap-2 justify-end items-center">
+                        <div className="flex flex-row gap-2 justify-end items-center h-5">
                             <button
                                 type="button"
-                                className="rounded-md bg-indigo-400 w-5 h-5 transition-all hover:scale-110 ease-linear"
+                                onClick={() => {changeColorInvoice('bg-indigo-400')}}
+                                className={`rounded-md bg-indigo-400 w-5 h-5 transition-all hover:scale-110 ease-linear ${colorInvoice.includes('indigo') ? 'w-6 h-6' : ''}`}
                             ></button>
                             <button
                                 type="button"
-                                className="rounded-md bg-green-400 w-5 h-5 transition-all hover:scale-110 ease-linear"
+                                onClick={() => {changeColorInvoice('bg-green-400')}}
+                                className={`rounded-md bg-green-400 w-5 h-5 transition-all hover:scale-110 ease-linear ${colorInvoice.includes('green') ? 'w-6 h-6' : ''}`}
                             ></button>
                             <button
                                 type="button"
-                                className="rounded-md bg-red-400 w-5 h-5 transition-all hover:scale-110 ease-linear"
+                                onClick={() => {changeColorInvoice('bg-red-400')}}
+                                className={`rounded-md bg-red-400 w-5 h-5 transition-all hover:scale-110 ease-linear ${colorInvoice.includes('red') ? 'w-6 h-6' : ''}`}
                             ></button>
                             <button
                                 type="button"
-                                className="rounded-md bg-blue-400 w-5 h-5 transition-all hover:scale-110 ease-linear"
+                                onClick={() => {changeColorInvoice('bg-blue-400')}}
+                                className={`rounded-md bg-blue-400 w-5 h-5 transition-all hover:scale-110 ease-linear ${colorInvoice.includes('blue') ? 'w-6 h-6' : ''}`}
                             ></button>
                             <button
                                 type="button"
-                                className="rounded-md bg-orange-400 w-5 h-5 transition-all hover:scale-110 ease-linear"
+                                onClick={() => {changeColorInvoice('bg-orange-400')}}
+                                className={`rounded-md bg-orange-400 w-5 h-5 transition-all hover:scale-110 ease-linear ${colorInvoice.includes('orange') ? 'w-6 h-6' : ''}`}
                             ></button>
-                            <button type="button" className="rounded-md bg-gray-400 w-6 h-6"></button>
+                            <button 
+                                type="button" 
+                                className={`rounded-md bg-gray-400 w-5 h-5 ${colorInvoice.includes('gray') ? 'w-6 h-6' : ''}`}
+                                onClick={() => {changeColorInvoice('bg-gray-400')}}>  
+                            </button>
                         </div>
 
                         <div className="invoice flex flex-col w-full rounded-lg overflow-hidden">
-                            <div className="flex w-full flex-col bg-gray-200 p-5 gap-3">
+                            <div className={`flex w-full flex-col p-5 gap-3 ${colorInvoice}`}>
                                 <div className="flex w-full justify-end">
                                     <h3 className="flex text-xl font-bold">INVOICE</h3>
                                 </div>
@@ -467,7 +478,6 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                </section>
             </form>
         </div>
     );
