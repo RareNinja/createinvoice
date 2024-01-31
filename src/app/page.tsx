@@ -386,10 +386,6 @@ export default function Home() {
                         <div className="bg-gray-200 p-4">
                             {/* <p className="font-bold">Total: R$ {calculateTotal()}</p> */}
                         </div>
-
-                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md mt-4">
-                            Enviar Fatura
-                        </button>
                     </div>
                 </div>
                 <div className="flex flex-col gap-5 w-1/2">
@@ -433,7 +429,7 @@ export default function Home() {
                                 <h3 className="flex text-xl font-bold">{fields["invoice.numero"]}</h3>
                             </div>
                             <div className="flex flex-col text-xs uppercase">
-                                <h4 className="text-lg uppercase font-semibold">Dados do Exportador</h4>
+                                <h4 className="text-lg uppercase font-semibold">Exportador</h4>
                                 <div className="flex flex-col gap-1">
                                     <p>{fields["exporter.name"]}</p>
                                     <p>{fields["exporter.address"]}</p>
@@ -443,7 +439,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="flex flex-col text-xs uppercase">
-                                <h4 className="text-lg uppercase font-semibold">Dados do Importador</h4>
+                                <h4 className="text-lg uppercase font-semibold">Importador</h4>
                                 <div className="flex flex-col gap-1">
                                     <p>{fields["importer.name"]}</p>
                                     <p>{fields["importer.address"]}</p>
@@ -453,7 +449,7 @@ export default function Home() {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2 text-xs uppercase p-5 border bg-white">
+                        <div className="flex flex-col gap-6 text-xs uppercase p-5 border bg-white">
                             <div className="flex flex-col gap-4">
                                 <label className="text-lg mb-3 font-semibold">Detalhes da Fatura</label>
                                 <div className="flex flex-row gap-2 w-full">
@@ -487,8 +483,50 @@ export default function Home() {
                                     </div>
                                 </div>
                             </div>
+                            <div className="flex flex-col gap-4">
+                              <table>
+                                <thead>
+                                <tr className="border-2 px-4 py-2 text-black">
+                                        <th className="border-2">Quantidade</th>
+                                        <th className="border-2">Unit</th>
+                                        <th className="border-2">NCM/SH</th>
+                                        <th className="border-2">Descrição</th>
+                                        <th className="border-2">País de Fabricação</th>
+                                        <th className="border-2">Moeda</th>
+                                        <th className="border-2">Preço Unitário</th>
+                                        <th className="border-2">Preço Total</th>
+                                        <th className="border-2">Peso Líquido Total (Kg)</th>
+                                        <th className="border-2">Peso Bruto Total (Kg)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                  <td>a</td>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div className="flex flex-row justify-between align-center">
+                                <label className="font-semibold">TOTAL USD</label>
+                                <p>1250</p>
+                            </div>
                         </div>
                     </div>
+                        <div className="flex flex-row gap-5 justify-center items-center h-5">
+                          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
+                              Download Fatura
+                          </button>
+                          <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md mt-4">
+                              Enviar Fatura
+                          </button>
+                        </div>
                 </div>
             </form>
         </div>
