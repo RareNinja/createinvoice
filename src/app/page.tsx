@@ -75,6 +75,18 @@ export default function Home() {
         setColorInvoice(className);
     }
 
+    // const calculateTotal = () =>{
+    //   const updatedFormData = {
+    //     ...formData,
+    //     items: formData.items.map((item) => ({
+    //         ...item,
+    //         totalPrice: item.quantity * item.unitPrice,
+    //     })),
+    // };
+
+    //  setFormData(updatedFormData);
+    // }
+
     return (
         <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
             <div className="flex flex-row justify-between items-center">
@@ -242,7 +254,18 @@ export default function Home() {
                             className="border-gray-300 border rounded-md p-2 w-full"
                         />
                     </div>
-                    <h2 className="text-xl font-semibold">Itens da Fatura</h2>
+                    <div className="flex justify-between">
+                      <h2 className="text-xl font-semibold">Itens da Fatura</h2>
+                      <div className="col-span-2">
+                              <button
+                                  type="button"
+                                  onClick={handleAddItem}
+                                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                                  >
+                                  Adicionar Item
+                              </button>
+                        </div>
+                    </div>
                     <div className="grid grid-cols-2 gap-4 w-full overflow-x-auto">
                         <div className="col-span-2">
                             <table className="table-auto">
@@ -332,6 +355,7 @@ export default function Home() {
                                             <td className="border-2 px-4 py-2 text-black">
                                                 <input
                                                     type="number"
+                                                    name="formData.items.unitPrice"
                                                     className="border-gray-300 border rounded-md p-2 text-black"
                                                 />
                                             </td>
@@ -370,21 +394,6 @@ export default function Home() {
                                     ))}
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div className="col-span-2">
-                            <button
-                                type="button"
-                                onClick={handleAddItem}
-                                className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                            >
-                                Adicionar Item
-                            </button>
-                        </div>
-
-                        <h2>Total da Fatura</h2>
-                        <div className="bg-gray-200 p-4">
-                            {/* <p className="font-bold">Total: R$ {calculateTotal()}</p> */}
                         </div>
                     </div>
                 </div>
@@ -515,7 +524,7 @@ export default function Home() {
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD</label>
-                                <p>1250</p>
+                                {/* <p className="font-bold">{calculateTotal()}</p> */}
                             </div>
                         </div>
                     </div>
