@@ -9,7 +9,7 @@ export default function Home() {
         unitPrice: string;
     };
     
-    const [fields, setFields] = useState({});
+    const [fields, setFields] = useState({}) as any;
 
     const [formData, setFormData] = useState({
         exporter: {
@@ -117,6 +117,7 @@ export default function Home() {
                                 name="exporter.phone"
                                 // ref={register({ required: true })}
                                 placeholder="Telefone"
+                                onChange={(e) => {handleUpdateFields(e)}}
                                 className="border-gray-300 border rounded-md p-2 w-full"
                             />
                             <input
@@ -229,7 +230,7 @@ export default function Home() {
                             />
                         </div>
                         <h2 className="text-xl font-semibold">Itens da Fatura</h2>
-                        <div className="grid grid-cols-2 gap-4 w-full hidden">
+                        <div className="grid grid-cols-2 gap-4 w-full">
                             <div className="col-span-2">
                                 <table className="table-auto">
                                     <thead>
@@ -404,20 +405,63 @@ export default function Home() {
                         </div>
 
                         <div className="invoice flex flex-col w-full rounded-lg overflow-hidden">
-                            <div className="flex w-full flex-col bg-gray-200 h-64 p-5 gap-5">
+                            <div className="flex w-full flex-col bg-gray-200 p-5 gap-3">
                                 <div className="flex w-full justify-end">
                                     <h3 className="flex text-xl font-bold">INVOICE</h3>
                                 </div>
-                                <div className="flex flex-col gap-2 text-xs font-semibold">
-                                    <h4 className="text-lg uppercase">Dados do Exportador</h4>
-                                    <div className="flex flex-row gap-2">
-                                        <label className="font-semibold">Nome</label>
-                                        {formData.exporter.name}
+                                <div className="flex flex-col text-xs uppercase">
+                                    <h4 className="text-lg uppercase font-semibold">Dados do Exportador</h4>
+                                    <div className="flex flex-col gap-1">
+                                        <p>{fields["exporter.name"]}</p>
+                                        <p>{fields["exporter.address"]}</p>
+                                        <p>{fields["exporter.zipCode"]}</p>
+                                        <p>{fields["exporter.phone"]}</p>
+                                        <p>{fields["exporter.cnpj"]}</p>
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-2 text-xs uppercase font-semibold">
-                                    <div className="flex flex-col">
-                                        <label></label>
+                                <div className="flex flex-col text-xs uppercase">
+                                    <h4 className="text-lg uppercase font-semibold">Dados do Importador</h4>
+                                    <div className="flex flex-col gap-1">
+                                        <p>{fields["importer.name"]}</p>
+                                        <p>{fields["importer.address"]}</p>
+                                        <p>{fields["importer.zipCode"]}</p>
+                                        <p>{fields["importer.phone"]}</p>
+                                        <p>{fields["importer.email"]}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-2 text-xs uppercase p-5 border bg-white">
+                                <div className="flex flex-col gap-4">
+                                    <label className="text-lg mb-3 font-semibold">Detalhes da Fatura</label>
+                                    <div className="flex flex-row gap-2 w-full">
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Termos de Pagamento</label>
+                                            <p>{fields["paymentTerms"]}</p>
+                                        </div>
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">País de Embarque</label>
+                                            <p>{fields["countryOfShipment"]}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-row gap-2 w-full">
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Incoterms</label>
+                                            <p>{fields["incoterms"]}</p>
+                                        </div>
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Shipping Date</label>
+                                            <p>{fields["shippingDate"]}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-row gap-2 w-full">
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">País de Origem</label>
+                                            <p>{fields["countryOfOrigin"]}</p>
+                                        </div>
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Tamanho do Container</label>
+                                            <p>{fields["sizeContainer"]}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
