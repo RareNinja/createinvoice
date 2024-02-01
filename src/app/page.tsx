@@ -3,9 +3,6 @@ import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "./components/modal";
 import { useReactToPrint } from 'react-to-print';
-import { ReactInstance } from 'react';
-
-
 export default function Home() {
     type InvoiceItem = {
         quantity: string;
@@ -13,8 +10,9 @@ export default function Home() {
         unitPrice: string;
     };
     type FaturaItens = {
+        item: number;
         quantity: number;
-        unity: number;
+        unity: string;
         ncm: string;
         description: string;
         countryManufacture: string;
@@ -66,7 +64,7 @@ export default function Home() {
     };
 
     const onSubmitItems = () => {
-
+        const itemValue = document.getElementById('item') as any
         const quantityValue = document.getElementById('quantity') as any
         const unit = document.getElementById('unit') as any
         const ncm = document.getElementById('ncm') as any
@@ -79,8 +77,9 @@ export default function Home() {
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
         const dataToSave = {
+            item: Number(itemValue.value),
             quantity: Number(quantityValue.value),
-            unity: Number(unit.value),
+            unity: `${unit.value}`,
             ncm: `${ncm.value}`,
             description: `${description.value}`,
             countryManufacture: `${countryManufacture.value}`,
@@ -102,8 +101,9 @@ export default function Home() {
     const handleSaveItemToFatura = () => {
         setFaturaItensValues((prevValue: any) => [...prevValue, faturaItemValue])
         setFaturaItemValue({
+            item: 0,
             quantity: 0,
-            unity: 0,
+            unity: '',
             ncm: '',
             description: '',
             countryManufacture: '',
@@ -115,7 +115,7 @@ export default function Home() {
         })
     }
 
-    const contentDocument: React.MutableRefObject<ReactInstance | null> = React.useRef(null);
+    const contentDocument: React.RefObject<HTMLDivElement> = useRef(null);
 
     const handlePrint = useReactToPrint({
       content: () => {
@@ -406,6 +406,7 @@ export default function Home() {
                                 <table>
                                     <thead>
                                         <tr className="border-2 px-4 py-2 text-black">
+                                            <th className="border-2">item</th>
                                             <th className="border-2">Quantidade</th>
                                             <th className="border-2">Unit</th>
                                             <th className="border-2">NCM/SH</th>
@@ -424,6 +425,7 @@ export default function Home() {
                                             faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
                                                 return (
                                                     <tr key={item.quantity}>
+                                                      <td className="border-2 text-center">{item.item}</td>
                                                         <td className="border-2 text-center">{item.quantity}</td>
                                                         <td className="border-2 text-center">{item.unity}</td>
                                                         <td className="border-2 text-center">{item.ncm}</td>
