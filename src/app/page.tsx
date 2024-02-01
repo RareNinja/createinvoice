@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "./components/modal";
 import { useReactToPrint } from 'react-to-print';
+import { ReactInstance } from 'react';
 
 
 export default function Home() {
@@ -114,12 +115,19 @@ export default function Home() {
         })
     }
 
-    const contentDocument = useRef();
+    const contentDocument: React.MutableRefObject<ReactInstance | null> = React.useRef(null);
 
     const handlePrint = useReactToPrint({
-      content: () => contentDocument.current,
-    })
-
+      content: () => {
+        const content = contentDocument.current;
+        if (content instanceof Element) {
+          return content;
+        } else {
+          console.error("Conteúdo inválido para impressão");
+          return null;
+        }
+      },
+    });
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
     }
