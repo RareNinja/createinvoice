@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import Windowsitem from "./components/JanelaItem";
+// import Windowsitem from "./components/JanelaItem";
 export default function Home() {
     type InvoiceItem = {
         quantity: string;
@@ -230,15 +230,15 @@ export default function Home() {
                         />
                     </div>
                     <div className="flex justify-between">
-                      <h2 className="text-xl font-semibold">Itens da Fatura</h2>
-                      <div className="col-span-2">
-                              <button
-                                  type="button"
-                                  // onClick={handleAddItem}
-                                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
-                                  >
-                                  Adicionar Item
-                              </button>
+                        <h2 className="text-xl font-semibold">Itens da Fatura</h2>
+                        <div className="col-span-2">
+                            <button
+                                type="button"
+                                // onClick={handleAddItem}
+                                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                            >
+                                Adicionar Item
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -338,34 +338,34 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4">
-                              <table>
-                                <thead>
-                                <tr className="border-2 px-4 py-2 text-black">
-                                        <th className="border-2">Quantidade</th>
-                                        <th className="border-2">Unit</th>
-                                        <th className="border-2">NCM/SH</th>
-                                        <th className="border-2">Descrição</th>
-                                        <th className="border-2">País de Fabricação</th>
-                                        <th className="border-2">Moeda</th>
-                                        <th className="border-2">Preço Unitário</th>
-                                        <th className="border-2">Preço Total</th>
-                                        <th className="border-2">Peso Líquido Total (Kg)</th>
-                                        <th className="border-2">Peso Bruto Total (Kg)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                  <td>a</td>
-                                </tbody>
-                              </table>
+                                <table>
+                                    <thead>
+                                        <tr className="border-2 px-4 py-2 text-black">
+                                            <th className="border-2">Quantidade</th>
+                                            <th className="border-2">Unit</th>
+                                            <th className="border-2">NCM/SH</th>
+                                            <th className="border-2">Descrição</th>
+                                            <th className="border-2">País de Fabricação</th>
+                                            <th className="border-2">Moeda</th>
+                                            <th className="border-2">Preço Unitário</th>
+                                            <th className="border-2">Preço Total</th>
+                                            <th className="border-2">Peso Líquido Total (Kg)</th>
+                                            <th className="border-2">Peso Bruto Total (Kg)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                        <td>a</td>
+                                    </tbody>
+                                </table>
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD</label>
@@ -373,14 +373,14 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                        <div className="flex flex-row gap-5 justify-center items-center h-5">
-                          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
-                              Download Fatura
-                          </button>
-                          <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md mt-4">
-                              Enviar Fatura
-                          </button>
-                        </div>
+                    <div className="flex flex-row gap-5 justify-center items-center h-5">
+                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
+                            Download Fatura
+                        </button>
+                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md mt-4">
+                            Enviar Fatura
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
