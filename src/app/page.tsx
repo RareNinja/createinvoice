@@ -2,6 +2,9 @@
 import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "./components/modal";
+import { useReactToPrint } from 'react-to-print';
+
+
 export default function Home() {
     type InvoiceItem = {
         quantity: string;
@@ -49,8 +52,6 @@ export default function Home() {
         sizeContainer: "",
         items: [{} as InvoiceItem],
     });
-
-    const qtdRef = useRef()
 
     const handleModal = () => {
         setOpenModalState(!openModal)
@@ -113,6 +114,12 @@ export default function Home() {
         })
     }
 
+    const contentDocument = useRef();
+
+    const handlePrint = useReactToPrint({
+      content: () => contentDocument.current,
+    })
+
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
     }
@@ -124,7 +131,7 @@ export default function Home() {
     //         ...item,
     //         totalPrice: item.quantity * item.unitPrice,
     //     })),
-    // };
+    //   };
 
     //  setFormData(updatedFormData);
     // }
@@ -144,7 +151,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="invoice.numero"
-                            // ref={register({ required: true })}
                             placeholder="Numero da invoice"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -155,7 +161,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="exporter.name"
-                            // ref={register({ required: true })}
                             placeholder="Nome"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -163,7 +168,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="exporter.address"
-                            // ref={register({ required: true })}
                             placeholder="Endereço"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -174,7 +178,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="exporter.zipCode"
-                            // ref={register({ required: true })}
                             placeholder="CEP"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -182,7 +185,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="exporter.phone"
-                            // ref={register({ required: true })}
                             placeholder="Telefone"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -190,7 +192,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="exporter.cnpj"
-                            // ref={register({ required: true })}
                             placeholder="CNPJ"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2"
@@ -201,7 +202,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="importer.name"
-                            // ref={register({ required: true })}
                             placeholder="Nome"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -209,7 +209,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="importer.address"
-                            // ref={register({ required: true })}
                             placeholder="Endereço"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -219,7 +218,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="importer.zipCode"
-                            // ref={register({ required: true })}
                             placeholder="CEP"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -227,7 +225,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="importer.phone"
-                            // ref={register({ required: true })}
                             placeholder="Telefone"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -235,7 +232,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="importer.email"
-                            // ref={register({ required: true })}
                             placeholder="Email"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -246,7 +242,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="paymentTerms"
-                            // ref={register()}
                             placeholder="Termos de Pagamento"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -254,7 +249,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="countryOfShipment"
-                            // ref={register()}
                             placeholder="País de Embarque"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -264,7 +258,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="incoterms"
-                            // ref={register()}
                             placeholder="Incoterms"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -272,7 +265,6 @@ export default function Home() {
                         <input
                             type="date"
                             name="shippingDate"
-                            // ref={register()}
                             placeholder="Data"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -282,7 +274,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="countryOfOrigin"
-                            // ref={register()}
                             placeholder="País de Origem"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -290,7 +281,6 @@ export default function Home() {
                         <input
                             type="text"
                             name="sizeContainer"
-                            // ref={register()}
                             placeholder="Tamanho do Container"
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
@@ -343,7 +333,7 @@ export default function Home() {
                         </button>
                     </div>
 
-                    <div className="invoice flex flex-col w-full rounded-lg overflow-hidden">
+                    <div ref={contentDocument} className="flex flex-col w-full rounded-lg overflow-hidden">
                         <div className={`flex w-full flex-col p-5 gap-3 ${colorInvoice}`}>
                             <div className="flex w-full justify-end gap-3">
                                 <h3 className="flex text-xl font-bold">INVOICE</h3>
@@ -426,16 +416,16 @@ export default function Home() {
                                             faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
                                                 return (
                                                     <tr key={item.quantity}>
-                                                        <td>{item.quantity}</td>
-                                                        <td>{item.unity}</td>
-                                                        <td>{item.ncm}</td>
-                                                        <td>{item.description}</td>
-                                                        <td>{item.countryManufacture}</td>
-                                                        <td>{item.currencyMoney}</td>
-                                                        <td>{item.priceUnit}</td>
-                                                        <td>{item.priceTotal}</td>
-                                                        <td>{item.netWheightTotal}</td>
-                                                        <td>{item.netWheightTotalUnit}</td>
+                                                        <td className="border-2 text-center">{item.quantity}</td>
+                                                        <td className="border-2 text-center">{item.unity}</td>
+                                                        <td className="border-2 text-center">{item.ncm}</td>
+                                                        <td className="border-2 text-center">{item.description}</td>
+                                                        <td className="border-2 text-center">{item.countryManufacture}</td>
+                                                        <td className="border-2 text-center">{item.currencyMoney}</td>
+                                                        <td className="border-2 text-center">{item.priceUnit}</td>
+                                                        <td className="border-2 text-center">{item.priceTotal}</td>
+                                                        <td className="border-2 text-center">{item.netWheightTotal}</td>
+                                                        <td className="border-2 text-center">{item.netWheightTotalUnit}</td>
                                                     </tr>
                                                 )
                                             }) : (
@@ -452,12 +442,9 @@ export default function Home() {
                             </div>
                         </div>
                     </div>
-                    <div className="flex flex-row gap-5 justify-center items-center h-5">
-                        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
+                    <div className="flex flex-row gap-5 justify-end items-center h-5">
+                        <button type="submit" onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
                             Download Fatura
-                        </button>
-                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded-md mt-4">
-                            Enviar Fatura
                         </button>
                     </div>
                 </div>
