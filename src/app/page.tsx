@@ -10,7 +10,7 @@ export default function Home() {
         unitPrice: string;
     };
     type FaturaItens = {
-        item: number;
+        itemList: number;
         quantity: number;
         unity: string;
         ncm: string;
@@ -77,7 +77,7 @@ export default function Home() {
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
         const dataToSave = {
-            item: Number(itemValue.value),
+            itemList: Number(itemValue.value),
             quantity: Number(quantityValue.value),
             unity: `${unit.value}`,
             ncm: `${ncm.value}`,
@@ -164,7 +164,11 @@ export default function Home() {
                             className="border-gray-300 border rounded-md p-2 w-full"
                         />
                     </div>
-                    <h2 className="text-xl font-semibold">Exportador</h2>
+
+                    <div className="flex flex-row justify-between">
+                      <h2 className="text-xl font-semibold">Dados Do Exportador</h2>
+                      <div className="justify-end">Anexar logo do exportador</div>
+                    </div>
                     <div className="flex flex-row gap-5">
                         <input
                             type="text"
@@ -205,7 +209,12 @@ export default function Home() {
                             className="border-gray-300 border rounded-md p-2"
                         />
                     </div>
-                    <h2 className="text-xl font-semibold">Importador</h2>
+                    <div className="flex flex-row justify-between text-center">
+                      <h2 className="text-xl font-semibold">Dados Do Importador</h2>
+                      <label htmlFor="img_logo">
+                        <input type="file" name="Img_logo" id="Img_logo"/>
+                      </label>
+                    </div>
                     <div className="flex flex-row gap-5">
                         <input
                             type="text"
@@ -425,7 +434,7 @@ export default function Home() {
                                             faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
                                                 return (
                                                     <tr key={item.quantity}>
-                                                      <td className="border-2 text-center">{item.item}</td>
+                                                      <td className="border-2 text-center">{item.itemList}</td>
                                                         <td className="border-2 text-center">{item.quantity}</td>
                                                         <td className="border-2 text-center">{item.unity}</td>
                                                         <td className="border-2 text-center">{item.ncm}</td>
