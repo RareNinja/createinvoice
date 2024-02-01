@@ -464,6 +464,13 @@ export default function Home() {
                     <div className="container p-24">
                         <input
                             type="text"
+                            name="item"
+                            id="item"
+                            placeholder="item"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
                             name="quantity"
                             id="quantity"
                             placeholder="Quantidade"
