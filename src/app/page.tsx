@@ -101,7 +101,7 @@ export default function Home() {
     const handleSaveItemToFatura = () => {
         setFaturaItensValues((prevValue: any) => [...prevValue, faturaItemValue])
         setFaturaItemValue({
-            item: 0,
+            itemList: 0,
             quantity: 0,
             unity: '',
             ncm: '',
