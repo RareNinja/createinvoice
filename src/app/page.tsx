@@ -1,17 +1,31 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-// import Windowsitem from "./components/JanelaItem";
+import Modal from "./components/modal";
 export default function Home() {
     type InvoiceItem = {
         quantity: string;
         description: string;
         unitPrice: string;
     };
+    type FaturaItens = {
+        quantity: number;
+        unity: number;
+        ncm: string;
+        description: string;
+        countryManufacture: string;
+        currencyMoney: string;
+        priceUnit: number;
+        priceTotal: number;
+        netWheightTotal: number;
+        netWheightTotalUnit: number;
+    }
 
     const [fields, setFields] = useState({}) as any;
     const [colorInvoice, setColorInvoice] = useState('bg-gray-400')
-
+    const [openModal, setOpenModalState] = useState(false)
+    const [faturaItensValues, setFaturaItensValues] = useState<FaturaItens[]>([])
+    const [faturaItemValue, setFaturaItemValue] = useState<FaturaItens>()
     const [formData, setFormData] = useState({
         exporter: {
             name: "",
@@ -36,14 +50,67 @@ export default function Home() {
         items: [{} as InvoiceItem],
     });
 
+    const qtdRef = useRef()
+
+    const handleModal = () => {
+        setOpenModalState(!openModal)
+    }
+
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data: any) => {
         // Enviar dados do formulário para o servidor
         console.log(data);
     };
+
+    const onSubmitItems = () => {
+
+        const quantityValue = document.getElementById('quantity') as any
+        const unit = document.getElementById('unit') as any
+        const ncm = document.getElementById('ncm') as any
+        const description = document.getElementById('description') as any
+        const countryManufacture = document.getElementById('countryManufacture') as any
+        const currencyMoney = document.getElementById('currencyMoney') as any
+        const priceUnit = document.getElementById('priceUnit') as any
+        const priceTotal = document.getElementById('priceTotal') as any
+        const netWheightTotal = document.getElementById('netWheightTotal') as any
+        const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
+
+        const dataToSave = {
+            quantity: Number(quantityValue.value),
+            unity: Number(unit.value),
+            ncm: `${ncm.value}`,
+            description: `${description.value}`,
+            countryManufacture: `${countryManufacture.value}`,
+            currencyMoney: `${currencyMoney.value}`,
+            priceUnit: Number(priceUnit.value),
+            priceTotal: Number(priceTotal.value),
+            netWheightTotal: Number(netWheightTotal.value),
+            netWheightTotalUnit: Number(netWheightTotalUnit.value),
+        }
+
+        setFaturaItensValues((prevValues: any) => [...prevValues, dataToSave])
+        handleModal()
+    }
     const handleUpdateFields = (field: any) => {
         setFields((prevValues: any) => ({ ...prevValues, [field.target.name]: field.target.value }))
+    }
+
+
+    const handleSaveItemToFatura = () => {
+        setFaturaItensValues((prevValue: any) => [...prevValue, faturaItemValue])
+        setFaturaItemValue({
+            quantity: 0,
+            unity: 0,
+            ncm: '',
+            description: '',
+            countryManufacture: '',
+            currencyMoney: '',
+            priceUnit: 0,
+            priceTotal: 0,
+            netWheightTotal: 0,
+            netWheightTotalUnit: 0,
+        })
     }
 
     const changeColorInvoice = (className: string) => {
@@ -234,7 +301,7 @@ export default function Home() {
                         <div className="col-span-2">
                             <button
                                 type="button"
-                                // onClick={handleAddItem}
+                                onClick={() => setOpenModalState(true)}
                                 className="bg-blue-500 text-white px-4 py-2 rounded-md"
                             >
                                 Adicionar Item
@@ -354,16 +421,28 @@ export default function Home() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
-                                        <td>a</td>
+
+                                        {
+                                            faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
+                                                return (
+                                                    <tr key={item.quantity}>
+                                                        <td>{item.quantity}</td>
+                                                        <td>{item.unity}</td>
+                                                        <td>{item.ncm}</td>
+                                                        <td>{item.description}</td>
+                                                        <td>{item.countryManufacture}</td>
+                                                        <td>{item.currencyMoney}</td>
+                                                        <td>{item.priceUnit}</td>
+                                                        <td>{item.priceTotal}</td>
+                                                        <td>{item.netWheightTotal}</td>
+                                                        <td>{item.netWheightTotalUnit}</td>
+                                                    </tr>
+                                                )
+                                            }) : (
+                                                <td colSpan={10} ><div className="flex justify-center m-10">Não existe items registrados</div></td>
+                                            )
+                                        }
+
                                     </tbody>
                                 </table>
                             </div>
@@ -383,6 +462,86 @@ export default function Home() {
                     </div>
                 </div>
             </form>
+            <Modal isOpen={openModal} handleModal={handleModal}>
+                <form onSubmit={handleSubmit(onSubmitItems)}>
+                    <div className="container p-24">
+                        <input
+                            type="text"
+                            name="quantity"
+                            id="quantity"
+                            placeholder="Quantidade"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="unit"
+                            id="unit"
+                            placeholder="Unidade"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="ncm"
+                            id="ncm"
+                            placeholder="NCM"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="description"
+                            id="description"
+                            placeholder="Descrição"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="countryManufacture"
+                            id="countryManufacture"
+                            placeholder="Pais de Fabricante"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="currencyMoney"
+                            id="currencyMoney"
+                            placeholder="Moeda"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="priceUnit"
+                            id="priceUnit"
+                            placeholder="Preço Unitario"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="priceTotal"
+                            id="priceTotal"
+                            placeholder="Preço total"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="netWheightTotal"
+                            id="netWheightTotal"
+                            placeholder="Peso Líquido Total"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                        <input
+                            type="text"
+                            name="netWheightTotalUnit"
+                            id="netWheightTotalUnit"
+                            placeholder="Peso Bruto Total"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                        />
+                    </div>
+
+                    <button type="submit" className=" m-10"> salvar</button>
+
+                </form>
+
+            </Modal>
         </div>
     );
 }

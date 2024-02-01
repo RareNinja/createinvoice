@@ -1,201 +1,39 @@
-// import React, { useState } from "react";
-// import { useForm } from "react-hook-form";
+import React, { useEffect } from "react";
+export interface ModalProps {
+    isOpen?: boolean;
+    children?: React.ReactNode;
+    stylesContainer?: any;
+    stylesContent?: any;
+    handleModal?: () => void;
+}
 
-// type InvoiceItem = {
-//   quantity: string;
-//   description: string;
-//   unitPrice: string;
-// };
+export default function Modal({ isOpen, children, stylesContainer, stylesContent, handleModal }: ModalProps) {
 
-// const [formData, setFormData] = useState({
-//   exporter: {
-//       name: "",
-//       address: "",
-//       zipCode: "",
-//       phone: "",
-//       cnpj: "",
-//   },
-//   importer: {
-//       name: "",
-//       address: "",
-//       zipCode: "",
-//       phone: "",
-//       email: "",
-//   },
-//   paymentTerms: "",
-//   countryOfShipment: "",
-//   incoterms: "",
-//   shippingDate: "",
-//   countryOfOrigin: "",
-//   sizeContainer: "",
-//   items: [{} as InvoiceItem],
-// });
+    const handleModalOverlay = (event: any) => {
+        if (event.target === event.currentTarget && handleModal) {
+            handleModal();
+        }
+    }
 
-// const handleAddItem = () => {
-//   setFormData({
-//     ...formData,
-//     items: [
-//       ...formData.items,
-//       {
-//         description: "",
-//         quantity: "",
-//         unitPrice: "",
-//       },
-//     ],
-//   });
-// };
+    useEffect(() => {
+        document.addEventListener('keydown', (event) => {
+            if (event.code === 'Escape' && isOpen && handleModal) {
+                handleModal()
+            }
+        })
+    }, [isOpen])
 
-// const handleRemoveItem = (index: any) => {
-//   const updatedItems = [...formData.items];
-//   updatedItems.splice(index, 1);
-
-//   setFormData({
-//     ...formData,
-//     items: updatedItems,
-//   });
-// };
-// const Windowsitem = ({}) => {
-//   return (
-//     <div className="grid grid-cols-2 gap-4 w-full overflow-x-auto">
-//                         <div className="col-span-2">
-//                             <table className="table-auto">
-//                                 <thead>
-//                                     <tr className="border-2 px-4 py-2 text-black">
-//                                         <th className="border-2">Quantidade</th>
-//                                         <th className="border-2">Unit</th>
-//                                         <th className="border-2">NCM/SH</th>
-//                                         <th className="border-2">Descrição</th>
-//                                         <th className="border-2">País de Fabricação</th>
-//                                         <th className="border-2">Moeda</th>
-//                                         <th className="border-2">Preço Unitário</th>
-//                                         <th className="border-2">Preço Total</th>
-//                                         <th className="border-2">Peso Líquido Total (Kg)</th>
-//                                         <th className="border-2">Peso Bruto Total (Kg)</th>
-//                                     </tr>
-//                                 </thead>
-//                                 <tbody>
-//                                     {formData.items.map((item, index) => (
-//                                         <tr key={index}>
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     name={`formData.items[${index}].quantity`}
-//                                                     value={item.quantity}
-//                                                     onChange={(e) =>
-//                                                         setFormData({
-//                                                             ...formData,
-//                                                             items: formData.items.map((i, idx) =>
-//                                                                 idx === index
-//                                                                     ? { ...i, quantity: e.target.value }
-//                                                                     : i
-//                                                             ),
-//                                                         })
-//                                                     }
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="text"
-//                                                     name={`formData.items[${index}].description`}
-//                                                     value={item.description}
-//                                                     onChange={(e) =>
-//                                                         setFormData({
-//                                                             ...formData,
-//                                                             items: formData.items.map((i) =>
-//                                                                 i === item
-//                                                                     ? { ...i, description: e.target.value }
-//                                                                     : i
-//                                                             ),
-//                                                         })
-//                                                     }
-//                                                     className="border-gray-300 border rounded-md p-2"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="text"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="text"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     name="formData.items.unitPrice"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2 text-black">
-//                                                 <input
-//                                                     type="number"
-//                                                     className="border-gray-300 border rounded-md p-2 text-black"
-//                                                 />
-//                                             </td>
-
-//                                             <td className="border-2 px-4 py-2">
-//                                                 <button
-//                                                     type="button"
-//                                                     onClick={() => handleRemoveItem(index)}
-//                                                     className="bg-red-500 text-white px-4 py-2 rounded-md"
-//                                                 >
-//                                                     Remover
-//                                                 </button>
-//                                             </td>
-//                                         </tr>
-//                                     ))}
-//                                 </tbody>
-//                             </table>
-//                         </div>
-//                     </div>
-//                     <div className="col-span-2">
-//                       <button
-//                         type="button"
-//                         onClick={handleAddItem}
-//                         className="bg-blue-500 text-white px-4 py-2 rounded-md"
-//                       >
-//                         Adicionar Item
-//                       </button>
-//                     </div>
-//   );
-// };
-
-// export default Windowsitem;
+    return (
+        <>
+            {
+                isOpen && (
+                    <div className={`overlay - modal py-3.5 !pt-14 fixed z-[9999] top-0 left-0 w-screen h-screen overflow-y-auto bg-black/50 flex justify-center items-center ${stylesContainer}`} onClick={handleModalOverlay}>
+                        <div className={`bg-white transition all ease-in delay-100 rounded-lg flex flex-col w-11 /12 md:w-9/12 lg:w-8/12 xl:w-6/12 max-h-[90vh] shadow-md ${stylesContent}`}>
+                            {children}
+                        </div >
+                    </div >
+                )
+            }
+        </>
+    )
+}
