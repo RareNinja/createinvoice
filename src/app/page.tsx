@@ -177,7 +177,7 @@ export default function Home() {
 
                     <div className="flex flex-row justify-between text-center">
                         <h2 className="text-xl font-semibold">Dados Do Exportador</h2>
-                        <label htmlFor="logoUpload">Faça o upload da sua logo:</label>
+                        <label htmlFor="logoUpload">logo Exportador:</label>
                         <input
                             type="file"
                             id="logoUpload"
@@ -227,7 +227,7 @@ export default function Home() {
                     </div>
                     <div className="flex flex-row justify-between text-center">
                         <h2 className="text-xl font-semibold">Dados Do Importador</h2>
-                        <label htmlFor="logoUpload">Faça o upload da sua logo:</label>
+                        <label htmlFor="logoUpload">logo Importador:</label>
                         <input
                             type="file"
                             id="logoUpload"
