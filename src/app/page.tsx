@@ -99,13 +99,13 @@ export default function Home() {
         setFields((prevValues: any) => ({ ...prevValues, [field.target.name]: field.target.value }))
     }
 
-    const handleFileChangeExpo = (eventExpo : any) => {
-      const file = eventExpo.target.files[0];
-      setLogoFileExpo(file);
+    const handleFileChangeExpo = (eventExpo: any) => {
+        const file = eventExpo.target.files[0];
+        setLogoFileExpo(file);
     };
-    const handleFileChangeImpo = (eventImpo : any) => {
-      const file = eventImpo.target.files[0];
-      setLogoFileImpo(file);
+    const handleFileChangeImpo = (eventImpo: any) => {
+        const file = eventImpo.target.files[0];
+        setLogoFileImpo(file);
     };
 
     const handleSaveItemToFatura = () => {
@@ -128,15 +128,15 @@ export default function Home() {
     const contentDocument: React.RefObject<HTMLDivElement> = useRef(null);
 
     const handlePrint = useReactToPrint({
-      content: () => {
-        const content = contentDocument.current;
-        if (content instanceof Element) {
-          return content;
-        } else {
-          console.error("Conteúdo inválido para impressão");
-          return null;
-        }
-      },
+        content: () => {
+            const content = contentDocument.current;
+            if (content instanceof Element) {
+                return content;
+            } else {
+                console.error("Conteúdo inválido para impressão");
+                return null;
+            }
+        },
     });
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
@@ -176,14 +176,14 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-row justify-between text-center">
-                      <h2 className="text-xl font-semibold">Dados Do Exportador</h2>
-                      <label htmlFor="logoUpload">Faça o upload da sua logo:</label>
-                      <input
-                        type="file"
-                        id="logoUpload"
-                        accept="image/*"
-                        onChange={handleFileChangeExpo}
-                      />
+                        <h2 className="text-xl font-semibold">Dados Do Exportador</h2>
+                        <label htmlFor="logoUpload">Faça o upload da sua logo:</label>
+                        <input
+                            type="file"
+                            id="logoUpload"
+                            accept="image/*"
+                            onChange={handleFileChangeExpo}
+                        />
                     </div>
                     <div className="flex flex-row gap-5">
                         <input
@@ -226,14 +226,14 @@ export default function Home() {
                         />
                     </div>
                     <div className="flex flex-row justify-between text-center">
-                      <h2 className="text-xl font-semibold">Dados Do Importador</h2>
-                      <label htmlFor="logoUpload">Faça o upload da sua logo:</label>
-                      <input
-                        type="file"
-                        id="logoUpload"
-                        accept="image/*"
-                        onChange={handleFileChangeImpo}
-                      />
+                        <h2 className="text-xl font-semibold">Dados Do Importador</h2>
+                        <label htmlFor="logoUpload">Faça o upload da sua logo:</label>
+                        <input
+                            type="file"
+                            id="logoUpload"
+                            accept="image/*"
+                            onChange={handleFileChangeImpo}
+                        />
                     </div>
                     <div className="flex flex-row gap-5">
                         <input
@@ -377,50 +377,50 @@ export default function Home() {
                                 <h3 className="flex text-xl font-bold">{fields["invoice.numero"]}</h3>
                             </div>
                             <div className="container flex justify-between">
-                              <div className="flex flex-col text-xs uppercase">
-                                  <h4 className="text-lg uppercase font-semibold">Exportador</h4>
-                                  <div className="flex flex-col gap-1">
-                                      <p>{fields["exporter.name"]}</p>
-                                      <p>{fields["exporter.address"]}</p>
-                                      <p>{fields["exporter.zipCode"]}</p>
-                                      <p>{fields["exporter.phone"]}</p>
-                                      <p>{fields["exporter.cnpj"]}</p>
-                                  </div>
-                              </div>
-                              <div id="logo_import" className="flex justify-center p-10">
-                                {logoFileExpo && (
-                                    <div>
-                                      <img
-                                        src={URL.createObjectURL(logoFileExpo)}
-                                        alt="Logo do Usuário"
-                                        style={{ width: '100px', height: 'auto' }}
-                                      />
+                                <div className="flex flex-col text-xs uppercase">
+                                    <h4 className="text-lg uppercase font-semibold">Exportador</h4>
+                                    <div className="flex flex-col gap-1">
+                                        <p>{fields["exporter.name"]}</p>
+                                        <p>{fields["exporter.address"]}</p>
+                                        <p>{fields["exporter.zipCode"]}</p>
+                                        <p>{fields["exporter.phone"]}</p>
+                                        <p>{fields["exporter.cnpj"]}</p>
                                     </div>
-                                  )}
-                              </div>
+                                </div>
+                                <div id="logo_import" className="flex justify-center p-10">
+                                    {logoFileExpo && (
+                                        <div>
+                                            <img
+                                                src={URL.createObjectURL(logoFileExpo)}
+                                                alt="Logo do Usuário"
+                                                style={{ width: '100px', height: 'auto' }}
+                                            />
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="container flex justify-between">
-                              <div className="flex flex-col text-xs uppercase">
-                                  <h4 className="text-lg uppercase font-semibold">Importador</h4>
-                                  <div className="flex flex-col gap-1">
-                                      <p>{fields["importer.name"]}</p>
-                                      <p>{fields["importer.address"]}</p>
-                                      <p>{fields["importer.zipCode"]}</p>
-                                      <p>{fields["importer.phone"]}</p>
-                                      <p>{fields["importer.email"]}</p>
-                                  </div>
-                              </div>
-                              <div id="logo_import" className="flex justify-center p-10">
-                                {logoFileImpo && (
-                                      <div>
-                                        <img
-                                          src={URL.createObjectURL(logoFileImpo)}
-                                          alt="Logo do Usuário"
-                                          style={{ width: '100px', height: 'auto' }}
-                                        />
-                                      </div>
+                                <div className="flex flex-col text-xs uppercase">
+                                    <h4 className="text-lg uppercase font-semibold">Importador</h4>
+                                    <div className="flex flex-col gap-1">
+                                        <p>{fields["importer.name"]}</p>
+                                        <p>{fields["importer.address"]}</p>
+                                        <p>{fields["importer.zipCode"]}</p>
+                                        <p>{fields["importer.phone"]}</p>
+                                        <p>{fields["importer.email"]}</p>
+                                    </div>
+                                </div>
+                                <div id="logo_import" className="flex justify-center p-10">
+                                    {logoFileImpo && (
+                                        <div>
+                                            <img
+                                                src={URL.createObjectURL(logoFileImpo)}
+                                                alt="Logo do Usuário"
+                                                style={{ width: '100px', height: 'auto' }}
+                                            />
+                                        </div>
                                     )}
-                              </div>
+                                </div>
                             </div>
                         </div>
                         <div className="flex flex-col gap-6 text-xs uppercase p-5 border bg-white">
@@ -480,7 +480,7 @@ export default function Home() {
                                             faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
                                                 return (
                                                     <tr key={item.quantity}>
-                                                      <td className="border-2 text-center">{item.itemList}</td>
+                                                        <td className="border-2 text-center">{item.itemList}</td>
                                                         <td className="border-2 text-center">{item.quantity}</td>
                                                         <td className="border-2 text-center">{item.unity}</td>
                                                         <td className="border-2 text-center">{item.ncm}</td>
@@ -592,11 +592,11 @@ export default function Home() {
                             name="netWheightTotalUnit"
                             id="netWheightTotalUnit"
                             placeholder="Peso Bruto Total"
-                            className="border-gray-300 border rounded-md p-2 w-full"s
+                            className="border-gray-300 border rounded-md p-2 w-full"
                         />
                     </div>
                     <div className="container p-5">
-                      <button type="submit" className="bg-blue-500 text-white px-7 py-2 rounded-md"> salvar </button>
+                        <button type="submit" className="bg-blue-500 text-white px-7 py-2 rounded-md"> salvar </button>
                     </div>
                 </form>
 
