@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "./components/modal";
 import { useReactToPrint } from 'react-to-print';
+
 export default function Home() {
     type InvoiceItem = {
         quantity: string;
@@ -162,7 +163,6 @@ export default function Home() {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-5 gap-5 rounded-lg flex flex-row w-full overflow-hidden">
-                {/* Cabeçalho da Fatura */}
                 <div className="flex flex-col gap-5 w-1/2">
                     <h2 className="text-xl font-semibold">Numero Invoice</h2>
                     <div className="flex flex-row gap-5">
