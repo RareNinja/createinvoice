@@ -1,10 +1,14 @@
 "use client";
 import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import Modal from "./components/modal";
+import Modal from "../../components/modal";
 import { useReactToPrint } from 'react-to-print';
+import Image from 'next/image';
+import withAuth from "@/app/components/WithAuth";
+import { signOut } from "firebase/auth";
+import { auth } from "@/app/firebase";
 
-export default function Home() {
+const Home = () => {
     type InvoiceItem = {
         quantity: string;
         description: string;
@@ -30,6 +34,8 @@ export default function Home() {
     const [faturaItensValues, setFaturaItensValues] = useState<FaturaItens[]>([])
     const [faturaItemValue, setFaturaItemValue] = useState<FaturaItens>()
     const [logoFileExpo, setLogoFileExpo] = useState(null);
+    const [filePreview, setFilePreview] = useState(null);
+    const [fileToSetFirestore, setFileToSetFirestore] = useState<File>();
     const [logoFileImpo, setLogoFileImpo] = useState(null);
     const [formData, setFormData] = useState({
         exporter: {
@@ -54,6 +60,8 @@ export default function Home() {
         sizeContainer: "",
         items: [{} as InvoiceItem],
     });
+
+    const inputLogoExportador = useRef(null) as any
 
     const handleModal = () => {
         setOpenModalState(!openModal)
@@ -104,9 +112,31 @@ export default function Home() {
         const file = eventExpo.target.files[0];
         setLogoFileExpo(file);
     };
+
+
     const handleFileChangeImpo = (eventImpo: any) => {
         const file = eventImpo.target.files[0];
         setLogoFileImpo(file);
+    };
+
+    const handleUpload = () => {
+        if (inputLogoExportador) inputLogoExportador.current.click()
+    }
+
+    const handleImageUploader = (file: File) => {
+        setFileToSetFirestore(file);
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.readAsDataURL(file);
+
+            reader.onload = (event) => {
+                const dataUrl = event.target?.result as any;
+
+                setFilePreview(dataUrl);
+            };
+        }
     };
 
     const handleSaveItemToFatura = () => {
@@ -159,7 +189,9 @@ export default function Home() {
         <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
             <div className="flex flex-row justify-between items-center">
                 <h1 className="text-2xl font-bold mb-4">Gerador de Invoice</h1>
-                <div className="justify-end">logo aqui</div>
+                <div className="justify-end" onClick={() => signOut(auth)}>
+                    Sair
+                </div>
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-5 gap-5 rounded-lg flex flex-row w-full overflow-hidden">
@@ -177,13 +209,52 @@ export default function Home() {
 
                     <div className="flex flex-row justify-between text-center">
                         <h2 className="text-xl font-semibold">Dados Do Exportador</h2>
-                        <label htmlFor="logoUpload">logo Exportador:</label>
-                        <input
-                            type="file"
-                            id="logoUpload"
-                            accept="image/*"
-                            onChange={handleFileChangeExpo}
-                        />
+
+                        <label
+                            onClick={handleUpload}
+                            className="flex  cursor-pointer appearance-none justify-center rounded-md border border-dashed border-gray-300 bg-white px-3 py-2 text-sm transition hover:border-gray-400 focus:border-solid focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
+                            <span className="flex items-center space-x-2">
+                                <svg className="h-6 w-6 stroke-gray-400" viewBox="0 0 256 256">
+                                    <path
+                                        d="M96,208H72A56,56,0,0,1,72,96a57.5,57.5,0,0,1,13.9,1.7"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></path>
+                                    <path
+                                        d="M80,128a80,80,0,1,1,144,48"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></path>
+                                    <polyline
+                                        points="118.1 161.9 152 128 185.9 161.9"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></polyline>
+                                    <line
+                                        x1="152"
+                                        y1="208"
+                                        x2="152"
+                                        y2="128"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></line>
+                                </svg>
+                                <span className="text-xs font-medium text-gray-600">
+                                    Insira o logo exportador
+                                </span>
+                            </span>
+                            <input
+                                type="file"
+                                id="logoUpload"
+                                accept="image/*"
+                                onChange={handleFileChangeExpo}
+                                hidden
+                            />
+                        </label>
                     </div>
                     <div className="flex flex-row gap-5">
                         <input
@@ -227,13 +298,51 @@ export default function Home() {
                     </div>
                     <div className="flex flex-row justify-between text-center">
                         <h2 className="text-xl font-semibold">Dados Do Importador</h2>
-                        <label htmlFor="logoUpload">logo Importador:</label>
-                        <input
-                            type="file"
-                            id="logoUpload"
-                            accept="image/*"
-                            onChange={handleFileChangeImpo}
-                        />
+                        <label
+                            onClick={handleUpload}
+                            className="flex  cursor-pointer appearance-none justify-center rounded-md border border-dashed border-gray-300 bg-white px-3 py-2 text-sm transition hover:border-gray-400 focus:border-solid focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
+                            <span className="flex items-center space-x-2">
+                                <svg className="h-6 w-6 stroke-gray-400" viewBox="0 0 256 256">
+                                    <path
+                                        d="M96,208H72A56,56,0,0,1,72,96a57.5,57.5,0,0,1,13.9,1.7"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></path>
+                                    <path
+                                        d="M80,128a80,80,0,1,1,144,48"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></path>
+                                    <polyline
+                                        points="118.1 161.9 152 128 185.9 161.9"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></polyline>
+                                    <line
+                                        x1="152"
+                                        y1="208"
+                                        x2="152"
+                                        y2="128"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="24"></line>
+                                </svg>
+                                <span className="text-xs font-medium text-gray-600">
+                                    Insira o logo importador
+                                </span>
+                            </span>
+                            <input
+                                type="file"
+                                id="logoUpload"
+                                accept="image/*"
+                                onChange={handleFileChangeImpo}
+                                hidden
+                            />
+                        </label>
                     </div>
                     <div className="flex flex-row gap-5">
                         <input
@@ -390,10 +499,11 @@ export default function Home() {
                                 <div id="logo_import" className="flex justify-center p-10">
                                     {logoFileExpo && (
                                         <div>
-                                            <img
-                                                src={URL.createObjectURL(logoFileExpo)}
+                                            <Image
+                                                src={`${URL.createObjectURL(logoFileExpo)}`}
                                                 alt="Logo do Usuário"
-                                                style={{ width: '100px', height: 'auto' }}
+                                                width={100}
+                                                height={100}
                                             />
                                         </div>
                                     )}
@@ -413,10 +523,11 @@ export default function Home() {
                                 <div id="logo_import" className="flex justify-center p-10">
                                     {logoFileImpo && (
                                         <div>
-                                            <img
+                                            <Image
                                                 src={URL.createObjectURL(logoFileImpo)}
                                                 alt="Logo do Usuário"
-                                                style={{ width: '100px', height: 'auto' }}
+                                                width={100}
+                                                height={100}
                                             />
                                         </div>
                                     )}
@@ -604,3 +715,6 @@ export default function Home() {
         </div>
     );
 }
+
+
+export default withAuth(Home)
