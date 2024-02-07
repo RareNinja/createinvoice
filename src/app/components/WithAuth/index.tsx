@@ -4,7 +4,7 @@ import PageLogin from "../login";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../firebase/index";
 // import Login from "../Login";
-import LoadingComponent from "../Loading/index";
+import LoadingComponent from "@/app/components/Loading";
 
 
 const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import withAuth from "@/app/components/WithAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
+import LoadingComponent from "@/app/components/Loading";
 
 const Home = () => {
     type InvoiceItem = {
@@ -61,7 +62,7 @@ const Home = () => {
         items: [{} as InvoiceItem],
     });
 
-    const inputLogoExportador = useRef(null) as any
+    const inputLogo = useRef(null) as any
 
     const handleModal = () => {
         setOpenModalState(!openModal)
@@ -120,9 +121,8 @@ const Home = () => {
     };
 
     const handleUpload = () => {
-        if (inputLogoExportador) inputLogoExportador.current.click()
+        if (inputLogo.current) inputLogo.current.click();
     }
-
     const handleImageUploader = (file: File) => {
         setFileToSetFirestore(file);
 
@@ -189,7 +189,7 @@ const Home = () => {
         <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
             <div className="flex flex-row justify-between items-center">
                 <h1 className="text-2xl font-bold mb-4">Gerador de Invoice</h1>
-                <div className="justify-end" onClick={() => signOut(auth)}>
+                <div className="bg-blue-500 text-white px-5 py-2 rounded-md" onClick={() => signOut(auth)}>
                     Sair
                 </div>
             </div>
@@ -218,30 +218,30 @@ const Home = () => {
                                     <path
                                         d="M96,208H72A56,56,0,0,1,72,96a57.5,57.5,0,0,1,13.9,1.7"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></path>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></path>
                                     <path
                                         d="M80,128a80,80,0,1,1,144,48"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></path>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></path>
                                     <polyline
                                         points="118.1 161.9 152 128 185.9 161.9"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></polyline>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></polyline>
                                     <line
                                         x1="152"
                                         y1="208"
                                         x2="152"
                                         y2="128"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></line>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></line>
                                 </svg>
                                 <span className="text-xs font-medium text-gray-600">
                                     Insira o logo exportador
@@ -296,8 +296,10 @@ const Home = () => {
                             className="border-gray-300 border rounded-md p-2"
                         />
                     </div>
+
                     <div className="flex flex-row justify-between text-center">
                         <h2 className="text-xl font-semibold">Dados Do Importador</h2>
+
                         <label
                             onClick={handleUpload}
                             className="flex  cursor-pointer appearance-none justify-center rounded-md border border-dashed border-gray-300 bg-white px-3 py-2 text-sm transition hover:border-gray-400 focus:border-solid focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600 disabled:cursor-not-allowed disabled:bg-gray-200 disabled:opacity-75">
@@ -306,30 +308,30 @@ const Home = () => {
                                     <path
                                         d="M96,208H72A56,56,0,0,1,72,96a57.5,57.5,0,0,1,13.9,1.7"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></path>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></path>
                                     <path
                                         d="M80,128a80,80,0,1,1,144,48"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></path>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></path>
                                     <polyline
                                         points="118.1 161.9 152 128 185.9 161.9"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></polyline>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></polyline>
                                     <line
                                         x1="152"
                                         y1="208"
                                         x2="152"
                                         y2="128"
                                         fill="none"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="24"></line>
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="24"></line>
                                 </svg>
                                 <span className="text-xs font-medium text-gray-600">
                                     Insira o logo importador
