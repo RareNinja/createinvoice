@@ -11,9 +11,9 @@ import LoadingComponent from "@/app/components/Loading";
 
 const Home = () => {
     type InvoiceItem = {
-        quantity: string;
+        quantity: number;
         description: string;
-        unitPrice: string;
+        unitPrice: number;
     };
     type FaturaItens = {
         itemList: number;
@@ -173,17 +173,12 @@ const Home = () => {
         setColorInvoice(className);
     }
 
-    // const calculateTotal = () =>{
-    //   const updatedFormData = {
-    //     ...formData,
-    //     items: formData.items.map((item) => ({
-    //         ...item,
-    //         totalPrice: item.quantity * item.unitPrice,
-    //     })),
-    //   };
-
-    //  setFormData(updatedFormData);
-    // }
+    const calculateTotal = () => {
+      const total = formData.items.reduce((accumulator, item) => {
+          return accumulator + item.quantity * item.unitPrice;
+      }, 0);
+      return total;
+  }
 
     return (
         <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
@@ -583,8 +578,6 @@ const Home = () => {
                                             <th className="border-2">Moeda</th>
                                             <th className="border-2">Preço Unitário</th>
                                             <th className="border-2">Preço Total</th>
-                                            <th className="border-2">Peso Líquido Total (Kg)</th>
-                                            <th className="border-2">Peso Bruto Total (Kg)</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -602,8 +595,6 @@ const Home = () => {
                                                         <td className="border-2 text-center">{item.currencyMoney}</td>
                                                         <td className="border-2 text-center">{item.priceUnit}</td>
                                                         <td className="border-2 text-center">{item.priceTotal}</td>
-                                                        <td className="border-2 text-center">{item.netWheightTotal}</td>
-                                                        <td className="border-2 text-center">{item.netWheightTotalUnit}</td>
                                                     </tr>
                                                 )
                                             }) : (
@@ -615,8 +606,32 @@ const Home = () => {
                                 </table>
                             </div>
                             <div className="flex flex-row justify-between align-center">
-                                <label className="font-semibold">TOTAL USD</label>
-                                {/* <p className="font-bold">{calculateTotal()}</p> */}
+                                <label className="font-semibold">TOTAL USD CFR</label>
+                                <p className="font-bold">{calculateTotal()}</p>
+                            </div>
+                            <div>
+                              <table>
+                                      <thead>
+                                          <tr className="border-2 px-4 py-2 text-black">
+                                              <th className="border-2">Peso Líquido Total (Kg)</th>
+                                              <th className="border-2">Peso Bruto Total (Kg)</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                            {
+                                              faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
+                                                  return (
+                                                      <tr key={item.quantity}>
+                                                          <td className="border-2 text-center">{item.netWheightTotal}</td>
+                                                          <td className="border-2 text-center">{item.netWheightTotalUnit}</td>
+                                                      </tr>
+                                                  )
+                                              }) : (
+                                                  <td colSpan={10} ><div className="flex justify-center m-10"></div></td>
+                                              )
+                                            }
+                                      </tbody>
+                              </table>
                             </div>
                         </div>
                     </div>

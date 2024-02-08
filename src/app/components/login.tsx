@@ -43,7 +43,8 @@ const PageLogin = () => {
                     Your email
                   </label>
                   <input
-                    type="text"
+                    type="email"
+                    placeholder="SeuEmail@gmail.com"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={(e: any) => {
                       handleUser("email", e.target.value);
@@ -55,7 +56,8 @@ const PageLogin = () => {
                     Password
                   </label>
                   <input
-                    type="text"
+                    type="password"
+                    placeholder="••••••••"
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     onChange={(e: any) => {
                       handleUser("password", e.target.value);
