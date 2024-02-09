@@ -534,35 +534,37 @@ const Home = () => {
                         <div className="flex flex-col gap-6 text-xs uppercase p-5 border bg-white">
                             <div className="flex flex-col gap-4">
                                 <label className="text-lg mb-3 font-semibold">Detalhes da Fatura</label>
-                                <div className="flex flex-row gap-2 w-full">
-                                    <div className="flex flex-col w-1/2">
-                                        <label className="font-semibold">Termos de Pagamento</label>
-                                        <p>{fields["paymentTerms"]}</p>
-                                    </div>
-                                    <div className="flex flex-col w-1/2">
-                                        <label className="font-semibold">País de Embarque</label>
-                                        <p>{fields["countryOfShipment"]}</p>
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 w-full">
-                                    <div className="flex flex-col w-1/2">
-                                        <label className="font-semibold">Incoterms</label>
-                                        <p>{fields["incoterms"]}</p>
-                                    </div>
-                                    <div className="flex flex-col w-1/2">
-                                        <label className="font-semibold">Shipping Date</label>
-                                        <p>{fields["shippingDate"]}</p>
-                                    </div>
-                                </div>
-                                <div className="flex flex-row gap-2 w-full">
-                                    <div className="flex flex-col w-1/2">
-                                        <label className="font-semibold">País de Origem</label>
-                                        <p>{fields["countryOfOrigin"]}</p>
-                                    </div>
-                                    <div className="flex flex-col w-1/2">
-                                        <label className="font-semibold">Tamanho do Container</label>
-                                        <p>{fields["sizeContainer"]}</p>
-                                    </div>
+                                <div className="flex flex-row w-full">
+                                  <div className="flex flex-row gap-2 w-full">
+                                      <div className="flex flex-col w-1/2">
+                                          <label className="font-semibold">Termos de Pagamento</label>
+                                          <p>{fields["paymentTerms"]}</p>
+                                      </div>
+                                      <div className="flex flex-col w-1/2">
+                                          <label className="font-semibold">País de Embarque</label>
+                                          <p>{fields["countryOfShipment"]}</p>
+                                      </div>
+                                  </div>
+                                  <div className="flex flex-row gap-2 w-full">
+                                      <div className="flex flex-col w-1/2">
+                                          <label className="font-semibold">Incoterms</label>
+                                          <p>{fields["incoterms"]}</p>
+                                      </div>
+                                      <div className="flex flex-col w-1/2">
+                                          <label className="font-semibold">Shipping Date</label>
+                                          <p>{fields["shippingDate"]}</p>
+                                      </div>
+                                  </div>
+                                  <div className="flex flex-row gap-2 w-full">
+                                      <div className="flex flex-col w-1/2">
+                                          <label className="font-semibold">País de Origem</label>
+                                          <p>{fields["countryOfOrigin"]}</p>
+                                      </div>
+                                      <div className="flex flex-col w-1/2">
+                                          <label className="font-semibold">Tamanho do Container</label>
+                                          <p>{fields["sizeContainer"]}</p>
+                                      </div>
+                                  </div>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4">
@@ -627,11 +629,16 @@ const Home = () => {
                                                       </tr>
                                                   )
                                               }) : (
-                                                  <td colSpan={10} ><div className="flex justify-center m-10"></div></td>
+                                                  <td colSpan={10} ><div className="flex justify-center m-5"></div></td>
                                               )
                                             }
                                       </tbody>
                               </table>
+                            </div>
+                            <div className="flex justify-center text-center">
+                              <p className="italic">
+                                {fields["exporter.name"]} {fields["exporter.cnpj"]}   {fields["shippingDate"]}
+                              </p>
                             </div>
                         </div>
                     </div>
