@@ -76,7 +76,7 @@ const Home = () => {
     };
 
     const onSubmitItems = () => {
-        const itemValue = document.getElementById('item') as any
+        const itemValue = document.getElementById('item').values as any
         const quantityValue = document.getElementById('quantity') as any
         const unit = document.getElementById('unit') as any
         const ncm = document.getElementById('ncm') as any
@@ -84,9 +84,12 @@ const Home = () => {
         const countryManufacture = document.getElementById('countryManufacture') as any
         const currencyMoney = document.getElementById('currencyMoney') as any
         const priceUnit = document.getElementById('priceUnit') as any
-        const priceTotal = document.getElementById('priceTotal') as any
+        // const priceTotal = document.getElementById('priceTotal') as any
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
+
+        console.log(`qtd.: ${quantityValue.value} and price ${priceUnit.value}`)
+        const totalPrice = quantityValue.value * priceUnit.value;
 
         const dataToSave = {
             itemList: Number(itemValue.value),
@@ -96,8 +99,8 @@ const Home = () => {
             description: `${description.value}`,
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
-            priceUnit: Number(priceUnit.value),
-            priceTotal: Number(priceTotal.value),
+            priceUnit: priceUnit.value,
+            priceTotal: Number(totalPrice),
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -637,7 +640,7 @@ const Home = () => {
                             </div>
                             <div className="flex justify-center text-center">
                               <p className="italic">
-                                {fields["exporter.name"]} {fields["exporter.cnpj"]}   {fields["shippingDate"]}
+                                {fields["exporter.name"]} {fields["exporter.cnpj"]} {fields["shippingDate"]}
                               </p>
                             </div>
                         </div>
@@ -708,13 +711,13 @@ const Home = () => {
                             placeholder="Preço Unitario"
                             className="border-gray-300 border rounded-md p-2 w-full"
                         />
-                        <input
+                        {/* <input
                             type="text"
                             name="priceTotal"
                             id="priceTotal"
                             placeholder="Preço total"
                             className="border-gray-300 border rounded-md p-2 w-full"
-                        />
+                        /> */}
                         <input
                             type="text"
                             name="netWheightTotal"
