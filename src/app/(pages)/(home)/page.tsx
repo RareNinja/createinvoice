@@ -76,7 +76,7 @@ const Home = () => {
     };
 
     const onSubmitItems = () => {
-        const itemValue = document.getElementById('item').values as any
+        const itemValue = document.getElementById('item') as any
         const quantityValue = document.getElementById('quantity') as any
         const unit = document.getElementById('unit') as any
         const ncm = document.getElementById('ncm') as any
@@ -88,8 +88,10 @@ const Home = () => {
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
-        console.log(`qtd.: ${quantityValue.value} and price ${priceUnit.value}`)
-        const totalPrice = quantityValue.value * priceUnit.value;
+        debugger
+        let unitPriceTratada = priceUnit.value.replace(',', '.')
+
+        let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada)).toFixed(2);
 
         const dataToSave = {
             itemList: Number(itemValue.value),
@@ -100,7 +102,7 @@ const Home = () => {
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
             priceUnit: priceUnit.value,
-            priceTotal: Number(totalPrice),
+            priceTotal: `${totalPrice.replace('.', ',')}`,
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -177,11 +179,13 @@ const Home = () => {
     }
 
     const calculateTotal = () => {
-      const total = formData.items.reduce((accumulator, item) => {
-          return accumulator + item.quantity * item.unitPrice;
-      }, 0);
-      return total;
-  }
+        const total = formData.items.reduce((accumulator, item) => {
+            const quantity = parseInt(item.quantity);
+            const unitPrice = parseFloat(item.unitPrice);
+            return accumulator + (quantity * unitPrice);
+        }, 0);
+        return total.toFixed(2);
+    }
 
     return (
         <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
@@ -538,36 +542,36 @@ const Home = () => {
                             <div className="flex flex-col gap-4">
                                 <label className="text-lg mb-3 font-semibold">Detalhes da Fatura</label>
                                 <div className="flex flex-row w-full">
-                                  <div className="flex flex-row gap-2 w-full">
-                                      <div className="flex flex-col w-1/2">
-                                          <label className="font-semibold">Termos de Pagamento</label>
-                                          <p>{fields["paymentTerms"]}</p>
-                                      </div>
-                                      <div className="flex flex-col w-1/2">
-                                          <label className="font-semibold">País de Embarque</label>
-                                          <p>{fields["countryOfShipment"]}</p>
-                                      </div>
-                                  </div>
-                                  <div className="flex flex-row gap-2 w-full">
-                                      <div className="flex flex-col w-1/2">
-                                          <label className="font-semibold">Incoterms</label>
-                                          <p>{fields["incoterms"]}</p>
-                                      </div>
-                                      <div className="flex flex-col w-1/2">
-                                          <label className="font-semibold">Shipping Date</label>
-                                          <p>{fields["shippingDate"]}</p>
-                                      </div>
-                                  </div>
-                                  <div className="flex flex-row gap-2 w-full">
-                                      <div className="flex flex-col w-1/2">
-                                          <label className="font-semibold">País de Origem</label>
-                                          <p>{fields["countryOfOrigin"]}</p>
-                                      </div>
-                                      <div className="flex flex-col w-1/2">
-                                          <label className="font-semibold">Tamanho do Container</label>
-                                          <p>{fields["sizeContainer"]}</p>
-                                      </div>
-                                  </div>
+                                    <div className="flex flex-row gap-2 w-full">
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Termos de Pagamento</label>
+                                            <p>{fields["paymentTerms"]}</p>
+                                        </div>
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">País de Embarque</label>
+                                            <p>{fields["countryOfShipment"]}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-row gap-2 w-full">
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Incoterms</label>
+                                            <p>{fields["incoterms"]}</p>
+                                        </div>
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Shipping Date</label>
+                                            <p>{fields["shippingDate"]}</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-row gap-2 w-full">
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">País de Origem</label>
+                                            <p>{fields["countryOfOrigin"]}</p>
+                                        </div>
+                                        <div className="flex flex-col w-1/2">
+                                            <label className="font-semibold">Tamanho do Container</label>
+                                            <p>{fields["sizeContainer"]}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div className="flex flex-col gap-4">
@@ -615,33 +619,33 @@ const Home = () => {
                                 <p className="font-bold">{calculateTotal()}</p>
                             </div>
                             <div>
-                              <table>
-                                      <thead>
-                                          <tr className="border-2 px-4 py-2 text-black">
-                                              <th className="border-2">Peso Líquido Total (Kg)</th>
-                                              <th className="border-2">Peso Bruto Total (Kg)</th>
-                                          </tr>
-                                      </thead>
-                                      <tbody>
-                                            {
-                                              faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
-                                                  return (
-                                                      <tr key={item.quantity}>
-                                                          <td className="border-2 text-center">{item.netWheightTotal}</td>
-                                                          <td className="border-2 text-center">{item.netWheightTotalUnit}</td>
-                                                      </tr>
-                                                  )
-                                              }) : (
-                                                  <td colSpan={10} ><div className="flex justify-center m-5"></div></td>
-                                              )
-                                            }
-                                      </tbody>
-                              </table>
+                                <table>
+                                    <thead>
+                                        <tr className="border-2 px-4 py-2 text-black">
+                                            <th className="border-2">Peso Líquido Total (Kg)</th>
+                                            <th className="border-2">Peso Bruto Total (Kg)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
+                                                return (
+                                                    <tr key={item.quantity}>
+                                                        <td className="border-2 text-center">{item.netWheightTotal}</td>
+                                                        <td className="border-2 text-center">{item.netWheightTotalUnit}</td>
+                                                    </tr>
+                                                )
+                                            }) : (
+                                                <td colSpan={10} ><div className="flex justify-center m-5"></div></td>
+                                            )
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
                             <div className="flex justify-center text-center">
-                              <p className="italic">
-                                {fields["exporter.name"]} {fields["exporter.cnpj"]} {fields["shippingDate"]}
-                              </p>
+                                <p className="italic">
+                                    {fields["exporter.name"]} {fields["exporter.cnpj"]} {fields["shippingDate"]}
+                                </p>
                             </div>
                         </div>
                     </div>
