@@ -10,11 +10,6 @@ import { auth } from "@/app/firebase";
 import LoadingComponent from "@/app/components/Loading";
 
 const Home = () => {
-    type InvoiceItem = {
-        quantity: number;
-        description: string;
-        unitPrice: number;
-    };
     type FaturaItens = {
         itemList: number;
         quantity: number;
@@ -38,29 +33,7 @@ const Home = () => {
     const [filePreview, setFilePreview] = useState(null);
     const [fileToSetFirestore, setFileToSetFirestore] = useState<File>();
     const [logoFileImpo, setLogoFileImpo] = useState(null);
-    const [formData, setFormData] = useState({
-        exporter: {
-            name: "",
-            address: "",
-            zipCode: "",
-            phone: "",
-            cnpj: "",
-        },
-        importer: {
-            name: "",
-            address: "",
-            zipCode: "",
-            phone: "",
-            email: "",
-        },
-        paymentTerms: "",
-        countryOfShipment: "",
-        incoterms: "",
-        shippingDate: "",
-        countryOfOrigin: "",
-        sizeContainer: "",
-        items: [{} as InvoiceItem],
-    });
+
 
     const inputLogo = useRef(null) as any
 
@@ -71,7 +44,6 @@ const Home = () => {
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data: any) => {
-        // Enviar dados do formulário para o servidor
         console.log(data);
     };
 
@@ -87,10 +59,18 @@ const Home = () => {
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
-        debugger
-        let unitPriceTratada = priceUnit.value.replace(',', '.')
+        let unitPriceTratada = priceUnit.value.replace(',', '.').replace('.','')
+        console.log(unitPriceTratada)
 
-        let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada)).toFixed(2);
+        let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada));
+        console.log(totalPrice)
+        
+        const formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+
+        let moeda = formatter.format(totalPrice)
 
         const dataToSave = {
             itemList: Number(itemValue.value),
@@ -101,7 +81,7 @@ const Home = () => {
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
             priceUnit: priceUnit.value,
-            priceTotal: `${totalPrice.replace('.', ',')}`,
+            priceTotal: `${moeda.replace('$','')}`,
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -173,6 +153,7 @@ const Home = () => {
             }
         },
     });
+
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
     }
@@ -606,9 +587,7 @@ const Home = () => {
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD CFR</label>
-                                {
-                                    faturaItensValues.map((item: any) => { return (<p className="font-bold" key={item.quantity}>{item.priceTotal}</p>) })
-                                }
+                                <p className="font-bold"></p>
                             </div>
                             <div>
                                 <table>
