@@ -84,7 +84,6 @@ const Home = () => {
         const countryManufacture = document.getElementById('countryManufacture') as any
         const currencyMoney = document.getElementById('currencyMoney') as any
         const priceUnit = document.getElementById('priceUnit') as any
-        // const priceTotal = document.getElementById('priceTotal') as any
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
@@ -176,15 +175,6 @@ const Home = () => {
     });
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
-    }
-
-    const calculateTotal = () => {
-        const total = formData.items.reduce((accumulator, item) => {
-            const quantity = parseInt(item.quantity);
-            const unitPrice = parseFloat(item.unitPrice);
-            return accumulator + (quantity * unitPrice);
-        }, 0);
-        return total.toFixed(2);
     }
 
     return (
@@ -616,7 +606,9 @@ const Home = () => {
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD CFR</label>
-                                <p className="font-bold">{calculateTotal()}</p>
+                                {
+                                    faturaItensValues.map((item: any) => { return (<p className="font-bold" key={item.quantity}>{item.priceTotal}</p>) })
+                                }
                             </div>
                             <div>
                                 <table>
@@ -658,84 +650,85 @@ const Home = () => {
             </form>
             <Modal isOpen={openModal} handleModal={handleModal}>
                 <form onSubmit={handleSubmit(onSubmitItems)}>
-                    <div className="container p-24">
-                        <input
-                            type="text"
-                            name="item"
-                            id="item"
-                            placeholder="item"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="quantity"
-                            id="quantity"
-                            placeholder="Quantidade"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="unit"
-                            id="unit"
-                            placeholder="Unidade"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="ncm"
-                            id="ncm"
-                            placeholder="NCM"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="description"
-                            id="description"
-                            placeholder="Descrição"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="countryManufacture"
-                            id="countryManufacture"
-                            placeholder="Pais de Fabricante"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="currencyMoney"
-                            id="currencyMoney"
-                            placeholder="Moeda"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="priceUnit"
-                            id="priceUnit"
-                            placeholder="Preço Unitario"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        {/* <input
-                            type="text"
-                            name="priceTotal"
-                            id="priceTotal"
-                            placeholder="Preço total"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        /> */}
-                        <input
-                            type="text"
-                            name="netWheightTotal"
-                            id="netWheightTotal"
-                            placeholder="Peso Líquido Total"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
-                        <input
-                            type="text"
-                            name="netWheightTotalUnit"
-                            id="netWheightTotalUnit"
-                            placeholder="Peso Bruto Total"
-                            className="border-gray-300 border rounded-md p-2 w-full"
-                        />
+                    <div className="container p-10">
+                        <div className="flex flex-row justify-center gap-4 m-2">
+                            <input
+                                type="text"
+                                name="item"
+                                id="item"
+                                placeholder="item"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                            <input
+                                type="text"
+                                name="quantity"
+                                id="quantity"
+                                placeholder="Quantidade"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                            <input
+                                type="text"
+                                name="unit"
+                                id="unit"
+                                placeholder="Unidade"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                            <input
+                                type="text"
+                                name="ncm"
+                                id="ncm"
+                                placeholder="NCM"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                        </div>
+                        <div className="m-2">
+                            <input
+                                type="text"
+                                name="description"
+                                id="description"
+                                placeholder="Descrição"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                        </div>
+                        <div className="m-2">
+                            <input
+                                type="text"
+                                name="countryManufacture"
+                                id="countryManufacture"
+                                placeholder="Pais de Fabricante"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                        </div>
+                        <div className="flex flex-row justify-center gap-4 m-2">
+                            <input
+                                type="text"
+                                name="currencyMoney"
+                                id="currencyMoney"
+                                placeholder="Moeda"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                            <input
+                                type="text"
+                                name="priceUnit"
+                                id="priceUnit"
+                                placeholder="Preço Unitario"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                            <input
+                                type="text"
+                                name="netWheightTotal"
+                                id="netWheightTotal"
+                                placeholder="Peso Líquido Total"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                            <input
+                                type="text"
+                                name="netWheightTotalUnit"
+                                id="netWheightTotalUnit"
+                                placeholder="Peso Bruto Total"
+                                className="border-gray-300 border rounded-md p-2 w-full"
+                            />
+                        </div>
                     </div>
                     <div className="container p-5">
                         <button type="submit" className="bg-blue-500 text-white px-7 py-2 rounded-md"> salvar </button>
