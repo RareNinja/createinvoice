@@ -13,6 +13,23 @@ import { FaturaItens, InvoiceItem } from "./types";
 
 
 const Home = () => {
+<<<<<<< HEAD
+=======
+    type FaturaItens = {
+        itemList: number;
+        quantity: number;
+        unity: string;
+        ncm: string;
+        description: string;
+        countryManufacture: string;
+        currencyMoney: string;
+        priceUnit: number;
+        priceTotal: number;
+        netWheightTotal: number;
+        netWheightTotalUnit: number;
+    }
+
+>>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
     const [fields, setFields] = useState({}) as any;
     const [colorInvoice, setColorInvoice] = useState('bg-gray-400')
     const [openModal, setOpenModalState] = useState(false)
@@ -23,6 +40,7 @@ const Home = () => {
     const [filePreview, setFilePreview] = useState(null);
     const [fileToSetFirestore, setFileToSetFirestore] = useState<File>();
     const [logoFileImpo, setLogoFileImpo] = useState(null);
+<<<<<<< HEAD
     const [formData, setFormData] = useState({
         exporter: {
             name: "",
@@ -70,6 +88,9 @@ const Home = () => {
         'en-US': 'USD',
         'en-GB': 'EUR'
     } as any;
+=======
+
+>>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
 
     const inputLogo = useRef(null) as any
 
@@ -80,7 +101,6 @@ const Home = () => {
     const { register, handleSubmit } = useForm();
 
     const onSubmit = (data: any) => {
-        // Enviar dados do formulário para o servidor
         console.log(data);
     };
 
@@ -96,9 +116,22 @@ const Home = () => {
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
+<<<<<<< HEAD
         let unitPriceTratada = priceUnit.value.replace(',', '.')
+=======
+        let unitPriceTratada = priceUnit.value.replace(',', '.').replace('.','')
+        console.log(unitPriceTratada)
+>>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
 
-        let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada)).toFixed(2);
+        let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada));
+        console.log(totalPrice)
+        
+        const formatter = new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        });
+
+        let moeda = formatter.format(totalPrice)
 
         const dataToSave = {
             itemList: Number(itemValue.value),
@@ -109,7 +142,7 @@ const Home = () => {
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
             priceUnit: priceUnit.value,
-            priceTotal: `${totalPrice.replace('.', ',')}`,
+            priceTotal: `${moeda.replace('$','')}`,
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -181,6 +214,7 @@ const Home = () => {
             }
         },
     });
+
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
     }
@@ -636,7 +670,11 @@ const Home = () => {
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD CFR</label>
+<<<<<<< HEAD
                                 {totalValue.toLocaleString(lang, { style: 'currency', currency: valuesCurrency[lang] })}
+=======
+                                <p className="font-bold"></p>
+>>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
                             </div>
                             <div>
                                 <table>
