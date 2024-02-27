@@ -10,26 +10,7 @@ import { auth } from "@/app/firebase";
 import LoadingComponent from "@/app/components/Loading";
 import { FaturaItens, InvoiceItem } from "./types";
 
-
-
 const Home = () => {
-<<<<<<< HEAD
-=======
-    type FaturaItens = {
-        itemList: number;
-        quantity: number;
-        unity: string;
-        ncm: string;
-        description: string;
-        countryManufacture: string;
-        currencyMoney: string;
-        priceUnit: number;
-        priceTotal: number;
-        netWheightTotal: number;
-        netWheightTotalUnit: number;
-    }
-
->>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
     const [fields, setFields] = useState({}) as any;
     const [colorInvoice, setColorInvoice] = useState('bg-gray-400')
     const [openModal, setOpenModalState] = useState(false)
@@ -40,7 +21,6 @@ const Home = () => {
     const [filePreview, setFilePreview] = useState(null);
     const [fileToSetFirestore, setFileToSetFirestore] = useState<File>();
     const [logoFileImpo, setLogoFileImpo] = useState(null);
-<<<<<<< HEAD
     const [formData, setFormData] = useState({
         exporter: {
             name: "",
@@ -80,17 +60,11 @@ const Home = () => {
         }
     };
 
-    console.log(lang)
-
-
     const valuesCurrency = {
         'pt-BR': 'BRL',
         'en-US': 'USD',
         'en-GB': 'EUR'
     } as any;
-=======
-
->>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
 
     const inputLogo = useRef(null) as any
 
@@ -116,19 +90,15 @@ const Home = () => {
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
-<<<<<<< HEAD
-        let unitPriceTratada = priceUnit.value.replace(',', '.')
-=======
-        let unitPriceTratada = priceUnit.value.replace(',', '.').replace('.','')
-        console.log(unitPriceTratada)
->>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
+
+
+        let unitPriceTratada = priceUnit.value.replace(',', '.').replace('.', '')
 
         let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada));
-        console.log(totalPrice)
-        
+
         const formatter = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD',
+            style: 'currency',
+            currency: 'USD',
         });
 
         let moeda = formatter.format(totalPrice)
@@ -142,7 +112,7 @@ const Home = () => {
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
             priceUnit: priceUnit.value,
-            priceTotal: `${moeda.replace('$','')}`,
+            priceTotal: `${moeda.replace('$', '')}`,
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -670,12 +640,8 @@ const Home = () => {
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD CFR</label>
-<<<<<<< HEAD
-                                {totalValue.toLocaleString(lang, { style: 'currency', currency: valuesCurrency[lang] })}
-=======
-                                <p className="font-bold"></p>
->>>>>>> debe078732e2c26620b141cf6977b0a2c72f9788
-                            </div>
+                                <p className="font-bold">{totalValue.toLocaleString(lang, { style: 'currency', currency: valuesCurrency[lang] })}</p>
+                            </div >
                             <div>
                                 <table>
                                     <thead>
@@ -705,15 +671,15 @@ const Home = () => {
                                     {fields["exporter.name"]} {fields["exporter.cnpj"]} {fields["shippingDate"]}
                                 </p>
                             </div>
-                        </div>
-                    </div>
+                        </div >
+                    </div >
                     <div className="flex flex-row gap-5 justify-end items-center h-5">
                         <button type="submit" onClick={handlePrint} className="bg-blue-500 text-white px-4 py-2 rounded-md mt-4">
                             Download Fatura
                         </button>
                     </div>
-                </div>
-            </form>
+                </div >
+            </form >
             <Modal isOpen={openModal} handleModal={handleModal}>
                 <form onSubmit={handleSubmit(onSubmitItems)}>
                     <div className="container p-10">
@@ -802,7 +768,7 @@ const Home = () => {
                 </form>
 
             </Modal>
-        </div>
+        </div >
     );
 }
 

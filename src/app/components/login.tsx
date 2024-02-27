@@ -17,13 +17,11 @@ const PageLogin = () => {
 
   const onSubmit = async () => {
     await signInWithEmailAndPassword(auth, user.email, user.password)
-      .then(() => {})
+      .then(() => { })
       .catch((error) => {
         console.log(error);
         if (error.code === "auth/invalid-login-credentials") {
-          // setErrorMessage("Email ou senha inválidos, por favor verifique e tente novamente!");
         } else if (error.code === "auth/invalid-credential") {
-          // setErrorMessage("Email ou senha inválidos, por favor verifique e tente novamente!");
         }
       });
   };
