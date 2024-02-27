@@ -28,7 +28,7 @@ export default function Modal({ isOpen, children, stylesContainer, stylesContent
             {
                 isOpen && (
                     <div className={`overlay - modal py-3.5 !pt-14 fixed z-[9999] top-0 left-0 w-screen h-screen overflow-y-auto bg-black/50 flex justify-center items-center ${stylesContainer}`} onClick={handleModalOverlay}>
-                        <div className={`bg-white transition all ease-in delay-100 rounded-lg flex flex-col w-11 /12 md:w-9/12 lg:w-8/12 xl:w-6/12 max-h-[90vh] shadow-md ${stylesContent}`}>
+                        <div className={`bg-white transition all ease-in delay-100 rounded-lg flex flex-col w-11 /12 md:w-9/12 lg:w-8/12 xl:w-6/12 max-h-[90vh] min-w-[570px] shadow-md ${stylesContent}`}>
                             {children}
                         </div >
                     </div >

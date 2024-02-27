@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../components/modal";
 import { useReactToPrint } from 'react-to-print';
@@ -8,31 +8,16 @@ import withAuth from "@/app/components/WithAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
 import LoadingComponent from "@/app/components/Loading";
+import { FaturaItens, InvoiceItem } from "./types";
+
+
 
 const Home = () => {
-    type InvoiceItem = {
-        quantity: number;
-        description: string;
-        unitPrice: number;
-    };
-    type FaturaItens = {
-        itemList: number;
-        quantity: number;
-        unity: string;
-        ncm: string;
-        description: string;
-        countryManufacture: string;
-        currencyMoney: string;
-        priceUnit: number;
-        priceTotal: number;
-        netWheightTotal: number;
-        netWheightTotalUnit: number;
-    }
-
     const [fields, setFields] = useState({}) as any;
     const [colorInvoice, setColorInvoice] = useState('bg-gray-400')
     const [openModal, setOpenModalState] = useState(false)
     const [faturaItensValues, setFaturaItensValues] = useState<FaturaItens[]>([])
+    const [totalValue, setTotalValue] = useState<number>(0)
     const [faturaItemValue, setFaturaItemValue] = useState<FaturaItens>()
     const [logoFileExpo, setLogoFileExpo] = useState(null);
     const [filePreview, setFilePreview] = useState(null);
@@ -61,6 +46,30 @@ const Home = () => {
         sizeContainer: "",
         items: [{} as InvoiceItem],
     });
+    const selectRef = useRef('pt-BR');
+    const [selectedValue, setSelectedValue] = useState(null);
+    const [lang, setLang] = useState(window.navigator.language);
+
+    const handleSelectChange = () => {
+        const value = selectRef.current.value;
+        setSelectedValue(value);
+        if (value === 'BRL') {
+            setLang('pt-BR');
+        } else if (value === 'USD') {
+            setLang('en-US');
+        } else if (value === 'EUR') {
+            setLang('en-GB');
+        }
+    };
+
+    console.log(lang)
+
+
+    const valuesCurrency = {
+        'pt-BR': 'BRL',
+        'en-US': 'USD',
+        'en-GB': 'EUR'
+    } as any;
 
     const inputLogo = useRef(null) as any
 
@@ -87,7 +96,6 @@ const Home = () => {
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
-        debugger
         let unitPriceTratada = priceUnit.value.replace(',', '.')
 
         let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada)).toFixed(2);
@@ -176,6 +184,16 @@ const Home = () => {
     const changeColorInvoice = (className: string) => {
         setColorInvoice(className);
     }
+
+    useEffect(() => {
+
+        const totalPriceSum = faturaItensValues.reduce((acc, item) => {
+            const value = item.priceTotal.toString().replace(',', '.')
+            return acc + Number(value);
+        }, 0);
+
+        setTotalValue(totalPriceSum)
+    }, [faturaItensValues]);
 
     return (
         <div className="container max-w-100 mx-auto flex p-5 flex-col text-xs">
@@ -425,6 +443,17 @@ const Home = () => {
                             onChange={(e) => { handleUpdateFields(e) }}
                             className="border-gray-300 border rounded-md p-2 w-full"
                         />
+                        <select
+                            ref={selectRef}
+                            id="moedaSelect"
+                            name="Moeda"
+                            className="border-gray-300 border rounded-md p-2 w-full"
+                            onChange={handleSelectChange}
+                        >
+                            <option value="BRL">Real brasileiro (BRL)</option>
+                            <option value="USD">Dólar americano (USD)</option>
+                            <option value="EUR">Euro (EUR)</option>
+                        </select>
                     </div>
                     <div className="flex justify-between">
                         <h2 className="text-xl font-semibold">Itens da Fatura</h2>
@@ -597,18 +626,17 @@ const Home = () => {
                                                     </tr>
                                                 )
                                             }) : (
-                                                <td colSpan={10} ><div className="flex justify-center m-10">Não existe items registrados</div></td>
+                                                <tr><td colSpan={10} ><div className="flex justify-center m-10">Não existe items registrados</div></td></tr>
                                             )
                                         }
 
                                     </tbody>
+
                                 </table>
                             </div>
                             <div className="flex flex-row justify-between align-center">
                                 <label className="font-semibold">TOTAL USD CFR</label>
-                                {
-                                    faturaItensValues.map((item: any) => { return (<p className="font-bold" key={item.quantity}>{item.priceTotal}</p>) })
-                                }
+                                {totalValue.toLocaleString(lang, { style: 'currency', currency: valuesCurrency[lang] })}
                             </div>
                             <div>
                                 <table>
@@ -620,15 +648,15 @@ const Home = () => {
                                     </thead>
                                     <tbody>
                                         {
-                                            faturaItensValues.length > 0 ? faturaItensValues.map((item: any) => {
+                                            faturaItensValues.length > 0 ? faturaItensValues.map((item: any, index: number) => {
                                                 return (
-                                                    <tr key={item.quantity}>
+                                                    <tr key={item.quantity + index}>
                                                         <td className="border-2 text-center">{item.netWheightTotal}</td>
                                                         <td className="border-2 text-center">{item.netWheightTotalUnit}</td>
                                                     </tr>
                                                 )
                                             }) : (
-                                                <td colSpan={10} ><div className="flex justify-center m-5"></div></td>
+                                                <tr><td colSpan={10} ><div className="flex justify-center m-5"></div></td></tr>
                                             )
                                         }
                                     </tbody>
