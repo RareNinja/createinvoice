@@ -44,12 +44,12 @@ const Home = () => {
         sizeContainer: "",
         items: [{} as InvoiceItem],
     });
-    const selectRef = useRef('pt-BR');
+    const selectRef = useRef('pt-BR') as any;
     const [selectedValue, setSelectedValue] = useState(null);
     const [lang, setLang] = useState(window.navigator.language);
 
     const handleSelectChange = () => {
-        const value = selectRef.current.value;
+        const value = selectRef.current.value
         setSelectedValue(value);
         if (value === 'BRL') {
             setLang('pt-BR');
@@ -92,16 +92,9 @@ const Home = () => {
 
 
 
-        let unitPriceTratada = priceUnit.value.replace(',', '.').replace('.', '')
+        let unitPriceTratada = priceUnit.value.replace(',', '.')
 
         let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada));
-
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        });
-
-        let moeda = formatter.format(totalPrice)
 
         const dataToSave = {
             itemList: Number(itemValue.value),
@@ -112,7 +105,7 @@ const Home = () => {
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
             priceUnit: priceUnit.value,
-            priceTotal: `${moeda.replace('$', '')}`,
+            priceTotal: `${totalPrice}`,
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -195,7 +188,8 @@ const Home = () => {
             const value = item.priceTotal.toString().replace(',', '.')
             return acc + Number(value);
         }, 0);
-
+        debugger
+        console.log(totalPriceSum)
         setTotalValue(totalPriceSum)
     }, [faturaItensValues]);
 
