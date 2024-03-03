@@ -670,7 +670,7 @@ const Home = () => {
                                 </table>
                             </div>
                             <div className="flex flex-row justify-between align-center">
-                                <label className="font-semibold">TOTAL USD CFR</label>
+                                <label className="font-semibold">TOTAL {valuesCurrency[lang]} CFR</label>
                                 <p className="font-bold">{totalValue.toLocaleString(lang, { style: 'currency', currency: valuesCurrency[lang] })}</p>
                             </div >
                             <div>
