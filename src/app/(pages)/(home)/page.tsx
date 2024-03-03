@@ -7,9 +7,7 @@ import Image from 'next/image';
 import withAuth from "@/app/components/WithAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
-import LoadingComponent from "@/app/components/Loading";
 import { FaturaItens, InvoiceItem } from "./types";
-
 const Home = () => {
     const [fields, setFields] = useState({}) as any;
     const [colorInvoice, setColorInvoice] = useState('bg-gray-400')
@@ -48,6 +46,11 @@ const Home = () => {
     const [selectedValue, setSelectedValue] = useState(null);
     const [lang, setLang] = useState(window.navigator.language);
 
+    const valuesCurrency = {
+        'pt-BR': 'BRL',
+        'en-US': 'USD',
+        'en-GB': 'EUR'
+    } as any;
     const handleSelectChange = () => {
         const value = selectRef.current.value
         setSelectedValue(value);
@@ -60,11 +63,7 @@ const Home = () => {
         }
     };
 
-    const valuesCurrency = {
-        'pt-BR': 'BRL',
-        'en-US': 'USD',
-        'en-GB': 'EUR'
-    } as any;
+
 
     const inputLogo = useRef(null) as any
 
@@ -78,6 +77,45 @@ const Home = () => {
         console.log(data);
     };
 
+    const formatValue = (inputValue: string) => {
+        let formattedValue = inputValue;
+        debugger
+        switch (lang) {
+            case 'pt-BR':
+                formattedValue = addCurrencyMask(formattedValue, 'R$', '.', ',');
+                break;
+            case 'en-US':
+                formattedValue = addCurrencyMask(formattedValue, '$', ',', '.');
+                break;
+            case 'en-GB':
+                formattedValue = addCurrencyMask(formattedValue, '£', ',', '.');
+                break;
+            default:
+                formattedValue = addCurrencyMask(formattedValue, '$', ',', '.');
+                break;
+        }
+        return formattedValue;
+    };
+
+    const addCurrencyMask = (value: string, currencySymbol: string, thousandsSeparator: string, decimalSeparator: string) => {
+        const [integerPart, decimalPart] = value.split('.');
+        const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, thousandsSeparator);
+        return `${currencySymbol}${formattedIntegerPart}${decimalSeparator}${decimalPart}`;
+    };
+
+    const tratarPriceUnit = (price: string) => {
+        price = price.replace(/\,/g, '.');
+
+        const lastIndex = price.lastIndexOf('.');
+
+        const beforeLastPoint = price.substring(0, lastIndex).replace(/\./g, '');
+        const afterLastPoint = price.substring(lastIndex + 1);
+        price = beforeLastPoint + '.' + afterLastPoint;
+        debugger
+
+        return price;
+    }
+
     const onSubmitItems = () => {
         const itemValue = document.getElementById('item') as any
         const quantityValue = document.getElementById('quantity') as any
@@ -90,12 +128,12 @@ const Home = () => {
         const netWheightTotal = document.getElementById('netWheightTotal') as any
         const netWheightTotalUnit = document.getElementById('netWheightTotalUnit') as any
 
+        let unitPriceTratada = tratarPriceUnit(priceUnit.value)
 
+        let quantidade = Number(quantityValue.value)
 
-        let unitPriceTratada = priceUnit.value.replace(',', '.')
-
-        let totalPrice = (parseInt(quantityValue.value) * parseFloat(unitPriceTratada));
-
+        let totalPrice = quantidade * Number(unitPriceTratada);
+        debugger
         const dataToSave = {
             itemList: Number(itemValue.value),
             quantity: Number(quantityValue.value),
@@ -105,7 +143,7 @@ const Home = () => {
             countryManufacture: `${countryManufacture.value}`,
             currencyMoney: `${currencyMoney.value}`,
             priceUnit: priceUnit.value,
-            priceTotal: `${totalPrice}`,
+            priceTotal: `${totalPrice.toFixed(2)}`,
             netWheightTotal: Number(netWheightTotal.value),
             netWheightTotalUnit: Number(netWheightTotalUnit.value),
         }
@@ -188,7 +226,6 @@ const Home = () => {
             const value = item.priceTotal.toString().replace(',', '.')
             return acc + Number(value);
         }, 0);
-        debugger
         console.log(totalPriceSum)
         setTotalValue(totalPriceSum)
     }, [faturaItensValues]);
@@ -620,7 +657,7 @@ const Home = () => {
                                                         <td className="border-2 text-center">{item.countryManufacture}</td>
                                                         <td className="border-2 text-center">{item.currencyMoney}</td>
                                                         <td className="border-2 text-center">{item.priceUnit}</td>
-                                                        <td className="border-2 text-center">{item.priceTotal}</td>
+                                                        <td className="border-2 text-center">{formatValue(item.priceTotal)}</td>
                                                     </tr>
                                                 )
                                             }) : (
@@ -765,6 +802,5 @@ const Home = () => {
         </div >
     );
 }
-
 
 export default withAuth(Home)
