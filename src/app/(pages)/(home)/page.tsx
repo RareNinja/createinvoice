@@ -7,16 +7,20 @@ import Image from "next/image";
 import withAuth from "@/app/components/WithAuth";
 import { signOut } from "firebase/auth";
 import { auth } from "@/app/firebase";
-import { FaturaItens, InvoiceItem } from "./types";
+import { Dadosbank, FaturaItens, InvoiceItem } from "./types";
 const Home = () => {
   const [fields, setFields] = useState({}) as any;
   const [colorInvoice, setColorInvoice] = useState("bg-gray-400");
   const [openModal, setOpenModalState] = useState(false);
+  const [openModalAddBack, setOpenModalAddBankState] = useState(false);
+  const [addInfoAccontBank, setAddInfoAccontBankState] = useState(false);
+  const [addInfoBankValues, setaddInfoBankValues] = useState<Dadosbank[]>([]);
   const [faturaItensValues, setFaturaItensValues] = useState<FaturaItens[]>([]);
   const [totalValue, setTotalValue] = useState<number>(0);
   const [pesototalValue, setPesoTotalValue] = useState<number>(0);
   const [pesoUnitTotalValue, setPesoUnitTotalValue] = useState<number>(0);
   const [faturaItemValue, setFaturaItemValue] = useState<FaturaItens>();
+  const [dadosInfoBankValue, setdadosInfoBankValue] = useState<Dadosbank>();
   const [logoFileExpo, setLogoFileExpo] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [fileToSetFirestore, setFileToSetFirestore] = useState<File>();
@@ -69,6 +73,11 @@ const Home = () => {
 
   const handleModal = () => {
     setOpenModalState(!openModal);
+  };
+
+  const handleModalAddBank = () => {
+    setOpenModalAddBankState(!openModalAddBack);
+    setAddInfoAccontBankState(!addInfoAccontBank);
   };
 
   const { register, handleSubmit } = useForm();
@@ -161,6 +170,17 @@ const Home = () => {
     setFaturaItensValues((prevValues: any) => [...prevValues, dataToSave]);
     handleModal();
   };
+
+  const onDadosBank = () => {
+    const IntermediaryBank = document.getElementById("IntermediaryBank") as any;
+
+    const dadosBank = {
+      interBank: IntermediaryBank.value,
+    };
+
+    setaddInfoBankValues((prevValues: any) => [...prevValues, dadosBank]);
+    handleModalAddBank();
+  };
   const handleUpdateFields = (field: any) => {
     setFields((prevValues: any) => ({
       ...prevValues,
@@ -198,7 +218,7 @@ const Home = () => {
   };
 
   const handleSaveItemToFatura = () => {
-    setFaturaItensValues((prevValue: any) => [...prevValue, faturaItemValue]);
+    setaddInfoBankValues((prevValue: any) => [...prevValue, faturaItemValue]);
     setFaturaItemValue({
       itemList: 0,
       quantity: 0,
@@ -211,6 +231,24 @@ const Home = () => {
       priceTotal: 0,
       netWheightTotal: 0,
       netWheightTotalUnit: 0,
+    });
+  };
+
+  const handleDadosBank = () => {
+    setFaturaItensValues((prevValue: any) => [
+      ...prevValue,
+      dadosInfoBankValue,
+    ]);
+    setdadosInfoBankValue({
+      interBank: "",
+      swiftCodeOne: "",
+      accountNumber: "",
+      beneficiaryBank: "",
+      swiftCodeTwe: "",
+      beneficiaryCustomer: "",
+      agency: "",
+      accontNumber: "",
+      address: "",
     });
   };
 
@@ -579,6 +617,18 @@ const Home = () => {
               </button>
             </div>
           </div>
+          <div className="flex justify-between">
+            <h2 className="text-xl font-semibold">Adicionar dados bancarios</h2>
+            <div className="col-span-2">
+              <button
+                type="button"
+                onClick={() => setOpenModalAddBankState(true)}
+                className="bg-blue-500 text-white px-4 py-2 rounded-md"
+              >
+                Adicionar dados bancarios
+              </button>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col gap-5 w-1/2">
           <div className="flex flex-row gap-2 justify-end items-center h-5">
@@ -644,6 +694,9 @@ const Home = () => {
           >
             <div className={`flex w-full flex-col p-5 gap-3 ${colorInvoice}`}>
               <div className="flex w-full justify-end gap-3">
+                {addInfoAccontBank && (
+                  <h3 className="flex text-xl font-bold">PROFORMA</h3>
+                )}
                 <h3 className="flex text-xl font-bold">INVOICE</h3>
                 <h3 className="flex text-xl font-bold">
                   {fields["invoice.numero"]}
@@ -830,6 +883,42 @@ const Home = () => {
                 </div>
               </div>
 
+              {addInfoAccontBank && (
+                <div>
+                  <label className="font-semibold">Bank Information</label>
+                  <div className="flex flex-row gap-5">
+                    <label className="font-semibold">Intermediary Bank:</label>
+                    <p>
+                      {addInfoBankValues.map((dados: any) => {
+                        return dados.interBank;
+                      })}
+                    </p>
+                    <label className="font-semibold">Swift Code:</label>
+                    <p></p>
+                    <label className="font-semibold">Account number:</label>
+                    <p></p>
+                  </div>
+                  <div className="flex flex-row gap-5">
+                    <label className="font-semibold">Beneficiary Bank:</label>
+                    <p></p>
+                    <label className="font-semibold">Swift Code:</label>
+                    <p></p>
+                    <label className="font-semibold">
+                      Beneficiary Customer:
+                    </label>
+                    <p></p>
+                  </div>
+                  <div className="flex flex-row gap-5">
+                    <label className="font-semibold">Agency:</label>
+                    <p></p>
+                    <label className="font-semibold">Account Number:</label>
+                    <p></p>
+                    <label className="font-semibold">Address:</label>
+                    <p></p>
+                  </div>
+                </div>
+              )}
+
               <div className="flex justify-center text-center">
                 <p className="italic">
                   {fields["exporter.name"]} {fields["exporter.cnpj"]}{" "}
@@ -927,6 +1016,92 @@ const Home = () => {
                 name="netWheightTotalUnit"
                 id="netWheightTotalUnit"
                 placeholder="Peso Bruto Total"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+            </div>
+          </div>
+          <div className="container p-5">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-7 py-2 rounded-md"
+            >
+              {" "}
+              salvar{" "}
+            </button>
+          </div>
+        </form>
+      </Modal>
+      <Modal isOpen={openModalAddBack} handleModal={handleModalAddBank}>
+        <form onSubmit={handleSubmit(onDadosBank)}>
+          <div className="container p-10">
+            <div className="flex flex-row justify-center gap-4 m-2">
+              <input
+                type="text"
+                name="IntermediaryBank"
+                id="IntermediaryBank"
+                placeholder="Banco intermediário"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+              <input
+                type="text"
+                name="swiftCodeOne"
+                id="swiftCodeOne"
+                placeholder="Código Swift"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+              <input
+                type="text"
+                name="accountNunber"
+                id="accountNunber"
+                placeholder="Número de conta"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+              <input
+                type="text"
+                name="beneficiaryBank"
+                id="beneficiaryBank"
+                placeholder="Banco beneficiário"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+            </div>
+            <div className="m-2">
+              <input
+                type="text"
+                name="swiftCodeTwe"
+                id="swiftCodeTwe"
+                placeholder="Código Swift"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+            </div>
+            <div className="m-2">
+              <input
+                type="text"
+                name="beneficiaryCustomer"
+                id="beneficiaryCustomer"
+                placeholder="Cliente beneficiário"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+            </div>
+            <div className="flex flex-row justify-center gap-4 m-2">
+              <input
+                type="text"
+                name="agency"
+                id="agency"
+                placeholder="Agência"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+              <input
+                type="text"
+                name="accountNumber"
+                id="accountNumber"
+                placeholder="Número de conta"
+                className="border-gray-300 border rounded-md p-2 w-full"
+              />
+              <input
+                type="text"
+                name="adress"
+                id="adress"
+                placeholder="endereço"
                 className="border-gray-300 border rounded-md p-2 w-full"
               />
             </div>
