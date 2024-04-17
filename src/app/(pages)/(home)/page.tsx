@@ -69,7 +69,6 @@ const Home = () => {
     }
   };
 
-  console.log(window.navigator.language);
   const inputLogo = useRef(null) as any;
 
   const handleModal = () => {
@@ -887,36 +886,56 @@ const Home = () => {
               {addInfoAccontBank && (
                 <div>
                   <label className="font-semibold">Bank Information</label>
-                  <div className="flex flex-row gap-5">
-                    <label className="font-semibold">Intermediary Bank:</label>
-                    <p>
-                      {addInfoBankValues.map((dados: any) => {
-                        return dados.interBank;
+                  {addInfoBankValues.map((dados: any) => {
+                        return (
+                          <>
+                            <div className="flex flex-row gap-5">
+                              <label className="font-semibold">Intermediary Bank:</label>
+                              <p>
+                                {dados.interBank}
+                              </p>
+                              <label className="font-semibold">Swift Code:</label>
+                              <p>
+                                {dados.swiftCodeOne}
+                              </p>
+                              <label className="font-semibold">Account number:</label>
+                              <p>
+                                {dados.accountNumber}
+                              </p>
+                            </div>
+                            <div className="flex flex-row gap-5">
+                              <label className="font-semibold">Beneficiary Bank:</label>
+                              <p>
+                                {dados.beneficiaryBank}
+                              </p>
+                              <label className="font-semibold">Swift Code:</label>
+                              <p>
+                                {dados.swiftCodeTwe}
+                              </p>
+                              <label className="font-semibold">
+                                Beneficiary Customer:
+                              </label>
+                              <p>
+                                {dados.beneficiaryCustomer}
+                              </p>
+                            </div>
+                            <div className="flex flex-row gap-5">
+                              <label className="font-semibold">Agency:</label>
+                              <p>
+                                {dados.agency}
+                              </p>
+                              <label className="font-semibold">Account Number:</label>
+                              <p>
+                                {dados.accontNumber}
+                              </p>
+                              <label className="font-semibold">Address:</label>
+                              <p>
+                                {dados.address}
+                              </p>
+                            </div>
+                          </>
+                        )
                       })}
-                    </p>
-                    <label className="font-semibold">Swift Code:</label>
-                    <p></p>
-                    <label className="font-semibold">Account number:</label>
-                    <p></p>
-                  </div>
-                  <div className="flex flex-row gap-5">
-                    <label className="font-semibold">Beneficiary Bank:</label>
-                    <p></p>
-                    <label className="font-semibold">Swift Code:</label>
-                    <p></p>
-                    <label className="font-semibold">
-                      Beneficiary Customer:
-                    </label>
-                    <p></p>
-                  </div>
-                  <div className="flex flex-row gap-5">
-                    <label className="font-semibold">Agency:</label>
-                    <p></p>
-                    <label className="font-semibold">Account Number:</label>
-                    <p></p>
-                    <label className="font-semibold">Address:</label>
-                    <p></p>
-                  </div>
                 </div>
               )}
 
