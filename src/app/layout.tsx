@@ -6,7 +6,7 @@ import login from "./components/login"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Criação de invoices",
+  title: "BRBUSES",
 
 };
 
