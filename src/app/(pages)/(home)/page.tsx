@@ -27,7 +27,7 @@ const Home = () => {
   const [logoFileImpo, setLogoFileImpo] = useState(null);
   const selectRef = useRef("pt-BR") as any;
   const [selectedValue, setSelectedValue] = useState(null);
-  const [lang, setLang] = useState(window.navigator.language);
+  const [lang, setLang] = useState("pt-BR");
   const [formData, setFormData] = useState({
     exporter: {
       name: "",
@@ -69,6 +69,7 @@ const Home = () => {
     }
   };
 
+  console.log(window.navigator.language);
   const inputLogo = useRef(null) as any;
 
   const handleModal = () => {
